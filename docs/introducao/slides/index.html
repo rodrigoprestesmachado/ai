@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Quarkus + LangChain4j - Workshop Section 1, Step 01</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+
+    <style>
+        /* =============================================
+           PALETA QUARKUS — azul #4695EB + vermelho #FF004A
+           ============================================= */
+        :root {
+            --r-main-font-size: 32px;
+            --bg-deep:      #09090f;
+            --bg-card:      #0f1526;
+            --bg-elevated:  #1a2540;
+            --accent:       #4695eb;
+            --accent-red:   #ff004a;
+            --accent-soft:  #74b3f5;
+            --accent-muted: #5fa8f0;
+            --green:        #22c55e;
+            --green-soft:   #4ade80;
+            --text-primary:   #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-faint:     #475569;
+            --border-soft:   rgba(70, 149, 235, 0.14);
+            --border-medium: rgba(70, 149, 235, 0.26);
+            --border-red:    rgba(255, 0, 74, 0.28);
+        }
+
+        body, .reveal {
+            background: var(--bg-deep);
+            background-image:
+                radial-gradient(at 10% 10%, rgba(70, 149, 235, 0.06) 0%, transparent 50%),
+                radial-gradient(at 90% 90%, rgba(255, 0, 74, 0.04) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .reveal {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-primary);
+            font-weight: 400;
+            letter-spacing: -0.005em;
+        }
+
+        /* =============================================
+           HEADINGS
+           ============================================= */
+        .reveal h1, .reveal h2, .reveal h3,
+        .reveal h4, .reveal h5, .reveal h6 {
+            font-family: 'Fraunces', Georgia, serif;
+            text-transform: none;
+            color: var(--text-primary);
+            text-shadow: none;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            font-variation-settings: "opsz" 96, "SOFT" 50;
+            margin-bottom: 28px;
+            line-height: 1.15;
+        }
+
+        .reveal h1 {
+            font-size: 2.6em;
+            font-weight: 600;
+            color: var(--accent-soft);
+            font-style: italic;
+        }
+
+        .reveal h2 {
+            font-size: 1.75em;
+            font-weight: 500;
+        }
+
+        .reveal h3 {
+            font-size: 1.2em;
+            color: var(--accent);
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        /* =============================================
+           TEXT
+           ============================================= */
+        .reveal p, .reveal li {
+            color: var(--text-primary);
+            line-height: 1.65;
+            font-weight: 400;
+        }
+
+        .reveal p { font-size: 1em; margin-bottom: 16px; }
+        .reveal li { font-size: 0.82em; }
+
+        /* =============================================
+           LISTS
+           ============================================= */
+        .reveal ul, .reveal ol {
+            text-align: left;
+            margin-left: 0;
+            list-style: none;
+            display: block;
+            padding-left: 0;
+        }
+
+        .reveal ul li, .reveal ol li {
+            margin-bottom: 10px;
+            padding-left: 36px;
+            position: relative;
+        }
+
+        .reveal ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 8px;
+            top: 1px;
+            color: var(--accent);
+            font-size: 0.85em;
+            line-height: 1.7;
+        }
+
+        .reveal ol { counter-reset: list-counter; }
+        .reveal ol li { counter-increment: list-counter; }
+        .reveal ol li::before {
+            content: counter(list-counter, decimal-leading-zero);
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent);
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 600;
+            font-size: 0.85em;
+            font-style: italic;
+        }
+
+        .reveal ul ul li::before,
+        .reveal ol ul li::before {
+            content: "·";
+            color: var(--text-faint);
+            font-size: 1.3em;
+            top: 0;
+        }
+
+        /* =============================================
+           CODE BLOCKS
+           ============================================= */
+        .reveal pre {
+            width: 100%;
+            font-size: 0.42em;
+            background: #080c18;
+            border: 1px solid var(--border-medium);
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+            margin: 18px 0;
+            padding: 20px 24px;
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        .reveal code {
+            padding: 2px 8px;
+            background: rgba(70, 149, 235, 0.1);
+            color: var(--accent-soft);
+            border-radius: 5px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88em;
+            font-weight: 500;
+            border: 1px solid rgba(70, 149, 235, 0.2);
+        }
+
+        .reveal pre code {
+            background: transparent;
+            border: none;
+            padding: 0;
+            font-size: 1em;
+            font-weight: 400;
+            display: block;
+            overflow: auto;
+            max-height: 340px;
+            font-family: 'JetBrains Mono', monospace;
+            counter-reset: ln-counter;
+        }
+
+        /* Line numbers — gerados via JS + CSS counter */
+        .reveal pre code .ln {
+            display: block;
+            counter-increment: ln-counter;
+        }
+
+        .reveal pre code .ln::before {
+            content: counter(ln-counter);
+            display: inline-block;
+            width: 2em;
+            text-align: right;
+            margin-right: 1.4em;
+            padding-right: 0.6em;
+            color: var(--text-faint);
+            border-right: 1px solid rgba(70, 149, 235, 0.15);
+            user-select: none;
+            font-size: 0.85em;
+            opacity: 0.7;
+        }
+
+        /* =============================================
+           INLINE STYLES
+           ============================================= */
+        .reveal strong {
+            color: var(--accent-soft);
+            font-weight: 600;
+        }
+
+        .reveal em {
+            color: var(--text-secondary);
+            font-style: italic;
+            font-family: 'Fraunces', Georgia, serif;
+        }
+
+        .reveal a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(70, 149, 235, 0.35);
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .reveal a:hover {
+            color: var(--accent-soft);
+            border-bottom-color: var(--accent-soft);
+        }
+
+        .reveal blockquote {
+            background: var(--bg-elevated);
+            border-left: 3px solid var(--accent);
+            padding: 16px 24px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-style: normal;
+            color: var(--text-primary);
+            box-shadow: none;
+            width: auto;
+            font-size: 0.95em;
+        }
+        .reveal blockquote p { margin: 0; }
+
+        /* =============================================
+           TABLES
+           ============================================= */
+        .reveal table {
+            margin: 18px auto;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-soft);
+            font-size: 0.75em;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .reveal table th, .reveal table td {
+            padding: 11px 16px;
+            border-bottom: 1px solid var(--border-soft);
+            text-align: left;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+        }
+
+        .reveal table tr:last-child td { border-bottom: none; }
+
+        .reveal table th {
+            background: rgba(70, 149, 235, 0.1);
+            color: var(--accent-soft);
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 500;
+            font-style: italic;
+            font-size: 1.05em;
+        }
+
+        .reveal table tr:hover td {
+            background: rgba(70, 149, 235, 0.04);
+        }
+
+        /* =============================================
+           SLIDE BASE (card style)
+           ============================================= */
+        .slides { text-align: left; }
+
+        .slides > section,
+        .slides > section > section {
+            background: var(--bg-card);
+            padding: 52px 68px;
+            border-radius: 18px;
+            border: 1px solid var(--border-soft);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        /* =============================================
+           SLIDE DE TITLE (primeiro slide)
+           ============================================= */
+        .slides > section.title-slide {
+            background: linear-gradient(140deg, #0f1a36 0%, #09090f 55%, #100010 100%) !important;
+            border: 1px solid rgba(70, 149, 235, 0.22) !important;
+            box-shadow: 0 20px 80px rgba(70, 149, 235, 0.12), 0 0 0 1px rgba(70, 149, 235, 0.1) !important;
+            text-align: center;
+        }
+
+        .slides > section.title-slide h1 {
+            font-size: 3em !important;
+            color: var(--accent-soft) !important;
+            font-style: italic;
+            text-shadow: 0 0 60px rgba(70, 149, 235, 0.3);
+            margin-bottom: 12px;
+        }
+
+        .slides > section.title-slide h2 {
+            color: var(--text-secondary) !important;
+            font-size: 1.1em !important;
+            font-style: normal;
+            font-weight: 400;
+            letter-spacing: 0.03em;
+        }
+
+        /* =============================================
+           SLIDES DE SEÇÃO (Parte 1, 2, ...)
+           ============================================= */
+        .slides > section.section-slide {
+            background: linear-gradient(140deg, #130018 0%, #09090f 50%, #0f1020 100%) !important;
+            border: 1px solid var(--border-red) !important;
+            box-shadow: 0 20px 80px rgba(255, 0, 74, 0.15), 0 0 0 1px var(--border-red) !important;
+            text-align: center;
+        }
+
+        .slides > section.section-slide h1 {
+            font-size: 3.4em !important;
+            color: var(--accent-red) !important;
+            font-style: italic;
+            text-shadow: 0 0 50px rgba(255, 0, 74, 0.35);
+            margin-bottom: 14px;
+        }
+
+        .slides > section.section-slide h2 {
+            color: var(--text-secondary) !important;
+            font-size: 1.25em !important;
+            font-style: italic;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+            margin-bottom: 0;
+        }
+
+        /* =============================================
+           CARDS: DESTAQUE, DICA, ALERTA
+           ============================================= */
+        .reveal .destaque {
+            background: linear-gradient(135deg, rgba(70, 149, 235, 0.09) 0%, rgba(70, 149, 235, 0.04) 100%);
+            border-left: 3px solid var(--accent);
+            padding: 16px 22px;
+            margin: 18px 0;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: var(--text-primary);
+        }
+        .reveal .destaque strong { color: var(--accent-soft); }
+
+        .reveal .dica {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.09) 0%, rgba(34, 197, 94, 0.04) 100%);
+            border-left: 3px solid var(--green);
+            padding: 16px 22px;
+            margin: 18px 0;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: var(--text-primary);
+        }
+        .reveal .dica strong { color: var(--green-soft); }
+        .reveal .dica code  { color: var(--green-soft); background: rgba(34, 197, 94, 0.1); border-color: rgba(34,197,94,0.2); }
+
+        .reveal .alerta {
+            background: linear-gradient(135deg, rgba(255, 0, 74, 0.1) 0%, rgba(255, 0, 74, 0.04) 100%);
+            border-left: 3px solid var(--accent-red);
+            padding: 16px 22px;
+            margin: 18px 0;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: var(--text-primary);
+        }
+        .reveal .alerta strong { color: #ff4472; }
+
+        /* =============================================
+           TWO-COLUMN LAYOUT
+           ============================================= */
+        .reveal .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.6rem;
+            align-items: start;
+            margin: 16px 0;
+        }
+
+        .reveal .two-col .col {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-soft);
+            border-radius: 10px;
+            padding: 18px 20px;
+            font-size: 0.82em;
+        }
+
+        .reveal .two-col .col h3 {
+            font-size: 1.05em;
+            margin-bottom: 12px;
+            margin-top: 0;
+        }
+
+        .reveal .two-col .col ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        .reveal .two-col .col ul li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            font-size: 1em;
+        }
+
+        .reveal .two-col .col ul li::before {
+            content: none;
+        }
+
+        /* =============================================
+           FLOW DIAGRAM (Recapitulando)
+           ============================================= */
+        .reveal .flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin: 28px 0 20px;
+        }
+
+        .reveal .flow-node {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-medium);
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-size: 0.58em;
+            text-align: center;
+            min-width: 148px;
+            flex-shrink: 0;
+            transition: border-color 0.2s;
+        }
+
+        .reveal .flow-node:hover {
+            border-color: var(--accent);
+        }
+
+        .reveal .flow-node .node-icon {
+            font-size: 2em;
+            display: block;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .reveal .flow-node .node-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .reveal .flow-node .node-desc {
+            color: var(--text-secondary);
+            font-size: 0.88em;
+            line-height: 1.4;
+        }
+
+        .reveal .flow-arrow {
+            color: var(--accent);
+            font-size: 1.6em;
+            padding: 0 10px;
+            flex-shrink: 0;
+            opacity: 0.6;
+        }
+
+        /* =============================================
+           PROGRESS, CONTROLS, SLIDE NUMBER
+           ============================================= */
+        .reveal .progress {
+            background: rgba(70, 149, 235, 0.15);
+            color: var(--accent);
+            height: 3px;
+        }
+
+        .reveal .controls { color: var(--accent); }
+
+        .reveal .slide-number {
+            color: var(--accent);
+            background: rgba(9, 9, 15, 0.9);
+            font-size: 0.68em;
+            padding: 5px 12px;
+            border-radius: 999px;
+            font-family: 'Fraunces', Georgia, serif;
+            font-style: italic;
+            border: 1px solid var(--border-soft);
+        }
+
+        /* =============================================
+           UTILS
+           ============================================= */
+        .reveal .small   { font-size: 0.7em; color: var(--text-faint); }
+        .reveal .center  { text-align: center; }
+
+        .reveal hr {
+            border: none;
+            border-top: 1px solid var(--border-soft);
+            margin: 22px 0;
+        }
+
+        .reveal .mermaid svg {
+            max-height: 380px;
+            height: auto;
+            width: auto;
+            max-width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .slides > section { padding: 32px 24px; }
+            .reveal h1 { font-size: 2em; }
+            .reveal h2 { font-size: 1.5em; }
+            .reveal .two-col { grid-template-columns: 1fr; }
+            .reveal .flow { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section data-markdown="slides.md"
+                     data-separator="^---$"
+                     data-separator-vertical="^--$"
+                     data-charset="utf-8">
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/markdown/markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/notes/notes.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+
+    <script>
+        Reveal.initialize({
+            hash: true,
+            width: 1280,
+            height: 800,
+            margin: 0.08,
+            transition: 'fade',
+            transitionSpeed: 'default',
+            controls: true,
+            progress: true,
+            center: true,
+            keyboard: true,
+            touch: true,
+            slideNumber: 'c/t',
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+
+        /* Adiciona line numbers em todos os blocos de código highlight.js */
+        function addLineNumbers() {
+            document.querySelectorAll('pre code.hljs:not([data-ln-done])').forEach(block => {
+                const lines = block.innerHTML.split('\n');
+                while (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+                block.innerHTML = lines
+                    .map(line => `<span class="ln">${line || '\u200b'}</span>`)
+                    .join('');
+                block.setAttribute('data-ln-done', '1');
+            });
+        }
+
+        Reveal.on('ready', addLineNumbers);
+        Reveal.on('slidechanged', addLineNumbers);
+    </script>
+</body>
+</html>

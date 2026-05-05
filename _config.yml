@@ -1,0 +1,10 @@
+remote_theme: pmarsceill/just-the-docs
+
+favicon_ico: "/imgs/favicon.png"
+
+aux_links:
+  "Github":
+    - "https://github.com/rodrigoprestesmachado/ai"
+
+# Footer content appears at the bottom of every page's main content
+footer_content: "Copyright &copy; 2026 <a href='https://rpmhub.dev'>RPM Hub</a>. Distributed by <a href='https://creativecommons.org/licenses/by/4.0/'>CC-BY-4.0 license</a>."
