@@ -4,7 +4,7 @@ title: Home
 nav_order: 1
 ---
 
-# Tópicos de Inteligência Artificial
+# Tópicos em Inteligência Artificial
 
 Este é um repositório de estudos sobre tópicos relacionados à inteligência
 artificial, mais especificamente, sobre implementação de aplicações que utilizam
