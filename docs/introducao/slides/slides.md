@@ -1,6 +1,6 @@
 <!-- .slide: class="title-slide" -->
 
-# Quarkus + LangChain4j
+# Introdução
 
 ## Workshop · Section 1 · Step 01
 
