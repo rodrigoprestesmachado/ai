@@ -34,7 +34,6 @@ quarkus.langchain4j.timeout=1m
 
 ---
 
-<!-- .slide: class="section-slide" -->
 
 ### Temperature — Criatividade do Modelo
 
@@ -52,7 +51,6 @@ Controla o quanto o modelo é "criativo" ou "conservador" nas respostas.
 
 ---
 
-<!-- .slide: class="section-slide" -->
 
 ### Max Tokens — Limite de Resposta
 
@@ -75,7 +73,7 @@ max-completion-tokens=1000
 
 ---
 
-<!-- .slide: class="section-slide" -->
+
 
 ### Frequency Penalty — Evitando Repetições
 
@@ -92,7 +90,6 @@ Define o quanto o modelo deve evitar repetir as mesmas palavras e frases.
 
 ---
 
-<!-- .slide: class="section-slide" -->
 
 ### Configuração Final do Step 2
 
@@ -140,7 +137,6 @@ Usuário envia mensagem  →  Servidor aguarda o LLM  →  LLM gera TUDO  →  U
 
 ---
 
-<!-- .slide: class="section-slide" -->
 
 ### Mudança 1: Retorno `Multi<String>` no AI Service
 
@@ -171,7 +167,6 @@ public interface CustomerSupportAgent {
 
 ---
 
-<!-- .slide: class="section-slide" -->
 
 ### Mudança 2: Atualizando o WebSocket
 
@@ -197,7 +192,6 @@ public Multi<String> onTextMessage(String message) {
 
 ---
 
-<!-- .slide: class="section-slide" -->
 
 ### Testando o Streaming
 
@@ -234,7 +228,6 @@ Em aplicações LLM existem diferentes tipos de mensagens, cada uma com um papel
 
 ---
 
-<!-- .slide: class="section-slide" -->
 
 ### O que é uma System Message?
 
@@ -247,7 +240,6 @@ System Message é uma diretiva que guia o comportamento e o tom do modelo durant
 
 ---
 
-<!-- .slide: class="section-slide" -->
 
 ### Implementando: Anotação `@SystemMessage`
 
@@ -280,7 +272,6 @@ public interface CustomerSupportAgent {
 
 ---
 
-<!-- .slide: class="section-slide" -->
 
 ### System Message e Memória da Conversa
 
@@ -299,7 +290,6 @@ O LLM recebe todo o histórico da conversa a cada mensagem — mas quando fica m
 
 ---
 
-<!-- .slide: class="section-slide" -->
 
 ### Testando a System Message
 
@@ -315,7 +305,6 @@ Tell me a story
 
 ---
 
-<!-- .slide: class="section-slide" -->
 
 ## Resumo — O que aprendemos hoje?
 
@@ -336,6 +325,5 @@ Tell me a story
 
 ---
 
-<!-- .slide: class="section-slide" -->
 
 > **Próximo passo:** Step 5 — Padrão RAG (Retrieval-Augmented Generation)
