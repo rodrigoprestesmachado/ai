@@ -1,9 +1,16 @@
-# Quarkus LangChain4j — Seção 1: Steps 2, 3 e 4
+<!-- .slide: class="title-slide" -->
 
-> **Workshop | Seção 1 | Estudantes de Computação**  
-> Parâmetros do Modelo · Streaming · System Messages
+# LLM Configuration and Streaming
+
+## Workshop · Section 1 · Step 02, 03 e 04
+
+<p class="small">Pressione <strong>F</strong> para tela cheia · <strong>ESC</strong> para visão geral · <strong>S</strong> para notas</p>
+
+[quarkus.io/quarkus-workshop-langchain4j](https://quarkus.io/quarkus-workshop-langchain4j)
 
 ---
+
+<!-- .slide: class="section-slide" -->
 
 ## STEP 2 — Parâmetros do Modelo
 
@@ -27,6 +34,8 @@ quarkus.langchain4j.timeout=1m
 
 ---
 
+<!-- .slide: class="section-slide" -->
+
 ### Temperature — Criatividade do Modelo
 
 **Propriedade:** `quarkus.langchain4j.openai.chat-model.temperature`
@@ -42,6 +51,8 @@ Controla o quanto o modelo é "criativo" ou "conservador" nas respostas.
 > **Dica para o workshop:** Teste `temperature=0.1` perguntando sobre um pôr do sol, depois `temperature=1.5`. Observe a diferença no estilo das respostas!
 
 ---
+
+<!-- .slide: class="section-slide" -->
 
 ### Max Tokens — Limite de Resposta
 
@@ -64,6 +75,8 @@ max-completion-tokens=1000
 
 ---
 
+<!-- .slide: class="section-slide" -->
+
 ### Frequency Penalty — Evitando Repetições
 
 **Propriedade:** `quarkus.langchain4j.openai.chat-model.frequency-penalty`
@@ -78,6 +91,8 @@ Define o quanto o modelo deve evitar repetir as mesmas palavras e frases.
 > **Experimento:** Peça ao modelo "Repeat the word hedgehog 50 times" com `penalty=2` e depois com `penalty=0`.
 
 ---
+
+<!-- .slide: class="section-slide" -->
 
 ### Configuração Final do Step 2
 
@@ -101,6 +116,8 @@ quarkus.langchain4j.openai.chat-model.frequency-penalty=0
 
 ---
 
+<!-- .slide: class="section-slide" -->
+
 ## STEP 3 — Respostas em Streaming
 
 > Enviando a resposta do LLM em tempo real, token por token
@@ -122,6 +139,8 @@ Usuário envia mensagem  →  Servidor aguarda o LLM  →  LLM gera TUDO  →  U
 **Solução:** Streaming — enviar a resposta token por token, conforme o LLM vai gerando!
 
 ---
+
+<!-- .slide: class="section-slide" -->
 
 ### Mudança 1: Retorno `Multi<String>` no AI Service
 
@@ -152,6 +171,8 @@ public interface CustomerSupportAgent {
 
 ---
 
+<!-- .slide: class="section-slide" -->
+
 ### Mudança 2: Atualizando o WebSocket
 
 O endpoint WebSocket precisa retornar o `Multi<String>` ao invés de aguardar a `String` completa.
@@ -176,6 +197,8 @@ public Multi<String> onTextMessage(String message) {
 
 ---
 
+<!-- .slide: class="section-slide" -->
+
 ### Testando o Streaming
 
 Prompt para testar:
@@ -193,6 +216,8 @@ Tell me a story containing 500 words
 
 ---
 
+<!-- .slide: class="section-slide" -->
+
 ## STEP 4 — System Messages
 
 > Definindo o contexto, tom e escopo da conversa com o LLM
@@ -209,6 +234,8 @@ Em aplicações LLM existem diferentes tipos de mensagens, cada uma com um papel
 
 ---
 
+<!-- .slide: class="section-slide" -->
+
 ### O que é uma System Message?
 
 System Message é uma diretiva que guia o comportamento e o tom do modelo durante toda a interação. Ela define o contexto, o papel e os limites do LLM — e é invisível para o usuário final.
@@ -219,6 +246,8 @@ System Message é uma diretiva que guia o comportamento e o tom do modelo durant
 - **Nunca é removida** — Mesmo quando mensagens antigas são descartadas por limite de contexto
 
 ---
+
+<!-- .slide: class="section-slide" -->
 
 ### Implementando: Anotação `@SystemMessage`
 
@@ -251,6 +280,8 @@ public interface CustomerSupportAgent {
 
 ---
 
+<!-- .slide: class="section-slide" -->
+
 ### System Message e Memória da Conversa
 
 O LLM recebe todo o histórico da conversa a cada mensagem — mas quando fica muito longo, mensagens antigas são removidas.
@@ -268,6 +299,8 @@ O LLM recebe todo o histórico da conversa a cada mensagem — mas quando fica m
 
 ---
 
+<!-- .slide: class="section-slide" -->
+
 ### Testando a System Message
 
 Após adicionar o `@SystemMessage`, reinicie a aplicação e envie:
@@ -281,6 +314,8 @@ Tell me a story
 | *"Era uma vez, numa terra distante..."* | *"Desculpe, posso ajudar apenas com aluguel de carros. Posso ajudá-lo a encontrar um veículo?"* |
 
 ---
+
+<!-- .slide: class="section-slide" -->
 
 ## Resumo — O que aprendemos hoje?
 
@@ -300,5 +335,7 @@ Tell me a story
 - Nunca removida da memória: contexto garantido
 
 ---
+
+<!-- .slide: class="section-slide" -->
 
 > **Próximo passo:** Step 5 — Padrão RAG (Retrieval-Augmented Generation)
