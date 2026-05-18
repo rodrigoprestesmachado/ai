@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Configuration and Streaming
-nav_order: 3
+title: Retrieval Augmented Generation
+nav_order: 4
 ---
 
 # RAG - Retrieval Augmented Generation
@@ -9,7 +9,7 @@ nav_order: 3
 RAG é uma técnica que combina a geração de texto com a recuperação de informações relevantes. Ele é usado para melhorar a qualidade e a precisão das respostas geradas por modelos de linguagem, permitindo que eles acessem informações externas para fornecer respostas mais informadas e contextualmente relevantes.
 
 <center>
-<iframe src="https://ai.rpmhub.dev/02rag/slides/index.html#/" title="RAG - Retrieval Augmented Generation" width="90%" height="500" style="border:none;"></iframe>
+<iframe src="https://ai.rpmhub.dev/03rag/slides/index.html#/" title="RAG - Retrieval Augmented Generation" width="90%" height="500" style="border:none;"></iframe>
 </center>
 
 # Referência
