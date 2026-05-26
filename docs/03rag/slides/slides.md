@@ -4,7 +4,7 @@
 
 ## Workshop · Section 1 · Steps 05 e 06
 
-Retrieval Augmented Generation — do EasyRAG às entranhas do padrão
+Retrieval Augmented Generation: do EasyRAG às entranhas do padrão
 
 <p class="small">Pressione <strong>F</strong> para tela cheia · <strong>ESC</strong> para visão geral · <strong>S</strong> para notas</p>
 
@@ -14,15 +14,15 @@ Retrieval Augmented Generation — do EasyRAG às entranhas do padrão
 
 ## Agenda dos Steps 05 e 06
 
-1. 🧠 **Por que RAG?** — O problema que o padrão resolve
-2. 🏗️ **Arquitetura RAG** — Ingestão e Augmentação
-3. ⚡ **Step 05 — EasyRAG** — Setup rápido com mínimo de código
-4. 🔬 **Step 06 — Desconstruindo o RAG** — Embedding model, Vector Store, Ingestor e Retriever
-5. 🔧 **RAG Avançado** — Customizando o Content Injector
-6. 🗺️ **Próximos passos** — Para onde o workshop nos leva
+1. 🧠 **Por que RAG?** O problema que o padrão resolve
+2. 🏗️ **Arquitetura RAG:** Ingestão e Augmentação
+3. ⚡ **Step 05, EasyRAG:** setup rápido com pouco código
+4. 🔬 **Step 06, desconstruindo o RAG:** as quatro peças do pipeline
+5. 🔧 **RAG Avançado:** customizando o Content Injector
+6. 🗺️ **Próximos passos** no workshop
 
 <div class="destaque">
-<strong>Objetivo:</strong> entender cada camada do RAG — primeiro via abstração (EasyRAG), depois desmontando peça por peça.
+<strong>Objetivo:</strong> entender cada camada do RAG. Primeiro via abstração (EasyRAG), depois desmontando peça por peça.
 </div>
 
 ---
@@ -35,12 +35,12 @@ Retrieval Augmented Generation — do EasyRAG às entranhas do padrão
 
 ---
 
-## O problema: LLMs têm conhecimento limitado
+## O problema: conhecimento limitado
 
-LLMs são treinados com enormes volumes de texto público — mas esse conhecimento tem **duas limitações críticas**:
+LLMs são treinados com grandes volumes de texto público. Esse conhecimento tem **duas limitações críticas**:
 
-- 📅 **Corte temporal** — o modelo não sabe de eventos recentes
-- 🏢 **Conhecimento específico** — o modelo não conhece *seus* documentos, políticas, dados de negócio
+- 📅 **Corte temporal:** o modelo não sabe de eventos recentes
+- 🏢 **Conhecimento específico:** o modelo não conhece *seus* documentos, políticas ou dados de negócio
 
 **Exemplo real:**
 
@@ -49,18 +49,18 @@ Usuário:  Qual é a nossa política de cancelamento?
 LLM:      Desculpe, não tenho informações sobre isso.
 ```
 
-O modelo simplesmente **não tem** essa informação — ela não estava no treinamento.
+O modelo simplesmente **não tem** essa informação. Ela não estava no treinamento.
 
 ---
 
-## A solução: injetar contexto relevante no prompt
+## A solução: injetar contexto no prompt
 
 **RAG = Retrieval Augmented Generation**
 
 A ideia central é simples:
 
 1. 📥 **Buscar** os trechos mais relevantes da sua base de conhecimento
-2. 📎 **Injetar** esses trechos diretamente no prompt enviado ao LLM
+2. 📎 **Injetar** esses trechos no prompt enviado ao LLM
 3. 🤖 O LLM **responde com base no contexto fornecido**
 
 ```
@@ -81,19 +81,19 @@ O padrão RAG é composto de **duas fases distintas**:
 
 <div class="two-col">
 <div class="col">
-<h3>📥 Ingestão (Ingestion)</h3>
+<h3>📥 Ingestão</h3>
 <ul>
 <li>Lê os documentos</li>
 <li>Divide em segmentos (<em>chunks</em>)</li>
 <li>Transforma em vetores (<em>embeddings</em>)</li>
-<li>Armazena na base vetorial (<em>vector store</em>)</li>
+<li>Armazena na base vetorial</li>
 </ul>
 </div>
 <div class="col">
-<h3>📤 Augmentação (Augmentation)</h3>
+<h3>📤 Augmentação</h3>
 <ul>
 <li>Recebe a pergunta do usuário</li>
-<li>Transforma em vetor (embedding)</li>
+<li>Transforma em vetor</li>
 <li>Busca os segmentos mais similares</li>
 <li>Injeta no prompt enviado ao LLM</li>
 </ul>
@@ -123,15 +123,15 @@ Documentos (PDF, TXT, DOCX...)
         ↓
    Document Splitter   ←  max-segment-size, max-overlap-size
         ↓
-  Embedding Model      ←  transforma texto → vetor numérico
+  Embedding Model      ←  transforma texto em vetor numérico
         ↓
    Vector Store        ←  armazena (texto + embedding)
 ```
 
-- 📄 **Document Loader** — lê arquivos do disco, web, banco de dados...
-- ✂️ **Document Splitter** — divide em pedaços menores com sobreposição
-- 🔢 **Embedding Model** — converte texto em vetor numérico de alta dimensão
-- 🗄️ **Vector Store** — banco de dados especializado em vetores
+- 📄 **Document Loader:** lê arquivos do disco, web, banco de dados
+- ✂️ **Document Splitter:** divide em pedaços menores com sobreposição
+- 🔢 **Embedding Model:** converte texto em vetor numérico
+- 🗄️ **Vector Store:** banco de dados especializado em vetores
 
 ---
 
@@ -142,15 +142,14 @@ Documentos (PDF, TXT, DOCX...)
 Textos **semanticamente similares** geram vetores **geometricamente próximos**:
 
 ```
-"política de cancelamento"  → [0.12, -0.45, 0.87, ..., 0.33]  (384 números)
+"política de cancelamento"      → [0.12, -0.45, 0.87, ..., 0.33]
 "posso cancelar minha reserva?" → [0.14, -0.41, 0.89, ..., 0.31]  ← próximo!
-"clima em São Paulo"        → [-0.72, 0.18, -0.05, ..., 0.61]  ← distante
+"clima em São Paulo"            → [-0.72, 0.18, -0.05, ..., 0.61] ← distante
 ```
 
 **Por que isso importa?**
 
-A busca na base vetorial usa **similaridade coseno** — encontra os textos
-numericamente mais próximos do vetor da pergunta, independente das palavras exatas usadas.
+A busca usa **similaridade coseno**. Ela encontra os textos numericamente mais próximos do vetor da pergunta, independente das palavras exatas.
 
 ---
 
@@ -180,7 +179,7 @@ A **sobreposição** garante que informações no limite entre dois segmentos n�
 ```
 Pergunta do usuário
         ↓
-   Embedding Model    ←  mesma pergunta → vetor
+   Embedding Model    ←  mesma pergunta vira vetor
         ↓
    Vector Store       ←  busca os N mais similares (cosine similarity)
         ↓
@@ -192,7 +191,7 @@ Pergunta do usuário
 ```
 
 <div class="dica">
-<strong>Regra crítica:</strong> o embedding model usado na ingestão e na augmentação <em>deve ser o mesmo</em>. Modelos diferentes geram vetores em espaços incompatíveis — a busca não funcionaria.
+<strong>Regra crítica:</strong> o embedding model usado na ingestão e na augmentação <em>deve ser o mesmo</em>. Modelos diferentes geram vetores em espaços incompatíveis e a busca não funcionaria.
 </div>
 
 ---
@@ -201,7 +200,7 @@ Pergunta do usuário
 
 # Parte 3
 
-## Step 05 — EasyRAG
+## Step 05, EasyRAG
 
 ---
 
@@ -209,7 +208,7 @@ Pergunta do usuário
 
 **EasyRAG** é uma abstração de alto nível que esconde toda a complexidade do RAG.
 
-Basicamente: você coloca seus dados em um diretório configurado e *voilà* — o Quarkus cuida de todo o pipeline.
+Basicamente: você coloca seus dados em um diretório configurado e o Quarkus cuida de todo o pipeline.
 
 ```properties
 quarkus.langchain4j.easy-rag.path=src/main/resources/rag
@@ -248,7 +247,7 @@ Ou via terminal:
 ```
 
 <div class="dica">
-<strong>Dev mode:</strong> ao adicionar a dependência com a aplicação rodando, ela reinicia automaticamente — mas ainda não funciona até que você adicione as propriedades de configuração.
+<strong>Dev mode:</strong> ao adicionar a dependência com a aplicação rodando, ela reinicia automaticamente, mas ainda não funciona até que você adicione as propriedades de configuração.
 </div>
 
 ---
@@ -298,7 +297,7 @@ quarkus.langchain4j.easy-rag.max-results=3
 | `path` | `src/main/resources/rag` | Onde estão os documentos |
 | `max-segment-size` | `100` | Máx. de tokens por segmento |
 | `max-overlap-size` | `25` | Sobreposição entre segmentos |
-| `max-results` | `3` | Qtde de segmentos recuperados por busca |
+| `max-results` | `3` | Qtde de segmentos por busca |
 
 ---
 
@@ -312,10 +311,10 @@ INFO  [io.qua.lan.eas.run.EasyRagIngestor] Ingesting documents from path:
 INFO  [io.qua.lan.eas.run.EasyRagIngestor] Ingested 1 files as 8 documents
 ```
 
-- 📄 `1 file` — o arquivo TXT que criamos
-- 📋 `8 documents` — o arquivo foi dividido em 8 segmentos de até 100 tokens
+- 📄 `1 file`, o arquivo TXT que criamos
+- 📋 `8 documents`, o arquivo foi dividido em 8 segmentos de até 100 tokens
 
-O EasyRAG usou automaticamente o **embedding model da OpenAI** para vetorizar os segmentos e os armazenou em um **store in-memory**.
+O EasyRAG usou automaticamente o **embedding model da OpenAI** e armazenou os segmentos em um **store in-memory**.
 
 ---
 
@@ -324,7 +323,7 @@ O EasyRAG usou automaticamente o **embedding model da OpenAI** para vetorizar os
 1. 🌐 Abra `http://localhost:8080/q/dev-ui`
 2. 🔍 Localize o tile **LangChain4j Core**
 3. 🗄️ Clique em **Embedding store**
-4. 🔎 Na seção *Search for relevant embeddings*, digite `Cancellation` e clique em **Search**
+4. 🔎 Em *Search for relevant embeddings*, digite `Cancellation` e clique em **Search**
 
 Você verá os segmentos mais similares à palavra buscada, junto com o **score de similaridade** (quanto maior, mais relevante).
 
@@ -366,7 +365,7 @@ O LLM recebeu a pergunta **mais o contexto relevante** extraído do nosso docume
 
 # Parte 4
 
-## Step 06 — Desconstruindo o RAG
+## Step 06, desconstruindo o RAG
 
 ---
 
@@ -374,10 +373,10 @@ O LLM recebeu a pergunta **mais o contexto relevante** extraído do nosso docume
 
 EasyRAG é ótimo para começar, mas em produção você vai precisar de:
 
-- 🧩 **Embedding model próprio** — rodar localmente, sem enviar dados a APIs externas
-- 🗄️ **Vector store persistente** — não perder os índices a cada restart
+- 🧩 **Embedding model próprio:** rodar localmente, sem enviar dados a APIs externas
+- 🗄️ **Vector store persistente:** não perder os índices a cada restart
 - 🎛️ **Controle fino** sobre ingestão, retrieval e augmentação
-- 📐 **Customizações** — filtros, múltiplos retrievers, prompt personalizado
+- 📐 **Customizações:** filtros, múltiplos retrievers, prompt personalizado
 
 O Step 06 remove o EasyRAG e implementa cada peça manualmente.
 
@@ -409,9 +408,9 @@ Ou via terminal: `./mvnw quarkus:remove-extension -Dextension=easy-rag`
 
 ---
 
-## Peça 1: Embedding Model local (BGE-Small-EN)
+## Peça 1: Embedding Model local (BGE Small EN)
 
-Em vez de usar o modelo de embedding da OpenAI (que envia dados para a nuvem), usamos um modelo **que roda localmente**:
+Em vez do modelo da OpenAI (que envia dados para a nuvem), usamos um modelo **que roda localmente**:
 
 ```xml
 <dependency>
@@ -427,15 +426,15 @@ quarkus.langchain4j.embedding-model.provider=\
   dev.langchain4j.model.embedding.onnx.bgesmallenq.BgeSmallEnQuantizedEmbeddingModel
 ```
 
-**Características do BGE-Small-EN:**
+**Características do BGE Small EN:**
 
-- 🏠 Roda localmente (ONNX Runtime) — **zero dados enviados à nuvem**
+- 🏠 Roda localmente via ONNX Runtime, **zero dados na nuvem**
 - 📐 Gera vetores de **384 dimensões**
-- ⚡ Modelo pequeno e rápido — ideal para desenvolvimento e edge computing
+- ⚡ Modelo pequeno e rápido, ideal para dev e edge
 
 ---
 
-## Peça 2: Vector Store com PostgreSQL pgVector
+## Peça 2: Vector Store com pgVector
 
 Em vez do store in-memory do EasyRAG, usamos **PostgreSQL com a extensão pgVector**:
 
@@ -452,7 +451,7 @@ E no `application.properties`:
 quarkus.langchain4j.pgvector.dimension=384
 ```
 
-**Por que `dimension=384`?** É o tamanho do vetor gerado pelo BGE-Small-EN. O banco precisa saber o tamanho antecipadamente para criar as colunas corretas.
+**Por que `dimension=384`?** É o tamanho do vetor gerado pelo BGE Small EN. O banco precisa saber o tamanho para criar as colunas corretas.
 
 <div class="dica">
 <strong>Dev Services:</strong> Quarkus sobe automaticamente um container PostgreSQL em dev mode. Certifique-se de ter Docker ou Podman instalado.
@@ -473,7 +472,7 @@ public class RagIngestion {
                        EmbeddingModel embeddingModel,
                        @ConfigProperty(name = "rag.location") Path documents) {
 
-        store.removeAll(); // limpa o store a cada restart (só em demo)
+        store.removeAll();
 
         List<Document> list =
             FileSystemDocumentLoader.loadDocumentsRecursively(documents);
@@ -495,35 +494,20 @@ public class RagIngestion {
 
 ## Decifrando o Ingestor
 
-```java
-@Observes StartupEvent ev
-```
-→ O método roda **automaticamente ao iniciar a aplicação** (evento CDI de lifecycle do Quarkus)
-
-```java
-EmbeddingStore store, EmbeddingModel embeddingModel
-```
-→ Quarkus **injeta automaticamente** os beans — o `PgVectorEmbeddingStore` e o `BgeSmallEnQuantizedEmbeddingModel`
-
-```java
-@ConfigProperty(name = "rag.location") Path documents
-```
-→ Lê o caminho dos documentos da propriedade `rag.location` definida no `application.properties`
-
-```java
-recursive(100, 25, new HuggingFaceTokenCountEstimator())
-```
-→ Splitter recursivo: 100 tokens por segmento, 25 de sobreposição, contagem via HuggingFace
+- `@Observes StartupEvent ev` faz o método rodar **ao iniciar a aplicação** (evento CDI de lifecycle)
+- `EmbeddingStore` e `EmbeddingModel` são **injetados automaticamente** pelo Quarkus (`PgVectorEmbeddingStore` + `BgeSmallEnQuantizedEmbeddingModel`)
+- `@ConfigProperty(name = "rag.location")` lê o caminho dos documentos do `application.properties`
+- `recursive(100, 25, HuggingFaceTokenCountEstimator)` define o splitter: 100 tokens por segmento, 25 de sobreposição
 
 <div class="alerta">
-<strong>Importante (do tutorial):</strong> splitter, segment size e overlap são cruciais para a precisão do RAG. Não há solução única — é preciso experimentar para cada caso de uso.
+<strong>Importante:</strong> splitter, segment size e overlap são cruciais para a precisão do RAG. Não há solução única, é preciso experimentar para cada caso de uso.
 </div>
 
 ---
 
-## Alternativa: In-Memory Store (sem Docker/Podman)
+## Alternativa: In-Memory Store
 
-Se não for possível rodar Dev Services com Docker, o tutorial oferece um fallback:
+Sem Docker/Podman, o tutorial oferece um fallback:
 
 **1.** Remova a dependência `quarkus-langchain4j-pgvector` do `pom.xml`
 
@@ -541,20 +525,20 @@ public class InMemoryEmbeddingStoreProvider {
 }
 ```
 
-O `RagIngestion` funciona normalmente — ele recebe qualquer implementação de `EmbeddingStore` via CDI.
+O `RagIngestion` funciona normalmente. Ele aceita qualquer implementação de `EmbeddingStore` via CDI.
 
 <div class="alerta">
-<strong>Atenção (do tutorial):</strong> solução de emergência apenas. Os dados são perdidos a cada restart. Use pgVector sempre que possível.
+<strong>Atenção:</strong> solução de emergência apenas. Os dados são perdidos a cada restart. Use pgVector sempre que possível.
 </div>
 
 ---
 
 ## Peça 4: O Retriever e o Augmentor
 
-Crie a classe `RagRetriever.java` — note: **sem** anotação de escopo na classe, apenas no método producer:
+Crie a classe `RagRetriever.java`. Importante: **sem** anotação de escopo na classe, apenas no método producer:
 
 ```java
-public class RagRetriever {   // sem @ApplicationScoped na classe!
+public class RagRetriever {
 
     @Produces
     @ApplicationScoped
@@ -586,9 +570,9 @@ public class RagRetriever {   // sem @ApplicationScoped na classe!
 
 **`DefaultRetrievalAugmentor`**
 
-- Recebe os segmentos recuperados pelo retriever
-- Injeta esses segmentos no prompt do usuário antes de chamar o LLM
-- É produzido como bean CDI (`@Produces @ApplicationScoped`) — o Quarkus LangChain4j o detecta e o aplica automaticamente ao AI Service
+- Recebe os segmentos do retriever
+- Injeta no prompt do usuário antes de chamar o LLM
+- É um bean CDI (`@Produces @ApplicationScoped`) detectado pelo Quarkus LangChain4j
 
 <div class="destaque">
 <strong>Regra de ouro:</strong> use o <em>exato mesmo</em> embedding model no ingestor e no retriever. Modelos diferentes geram espaços vetoriais incompatíveis.
@@ -600,13 +584,13 @@ public class RagRetriever {   // sem @ApplicationScoped na classe!
 
 | Aspecto | EasyRAG (Step 05) | RAG Manual (Step 06) |
 |---|---|---|
-| Embedding model | OpenAI (nuvem) | BGE-Small-EN (local) |
+| Embedding model | OpenAI (nuvem) | BGE Small EN (local) |
 | Vector store | In-memory | PostgreSQL pgVector |
 | Ingestor | Automático | `RagIngestion.java` |
-| Retriever/Augmentor | Automático | `RagRetriever.java` |
-| Configuração | ~4 propriedades | ~6 propriedades + 2 classes |
+| Retriever / Augmentor | Automático | `RagRetriever.java` |
+| Configuração | ~4 propriedades | ~6 props + 2 classes |
 | Controle | Baixo | Alto |
-| Privacidade dos dados | Dados vão à nuvem | Dados ficam locais |
+| Privacidade | Dados vão à nuvem | Dados ficam locais |
 
 ---
 
@@ -614,7 +598,7 @@ public class RagRetriever {   // sem @ApplicationScoped na classe!
 
 # Parte 5
 
-## RAG Avançado — Customizando o Content Injector
+## RAG Avançado
 
 ---
 
@@ -630,7 +614,7 @@ Answer using the following information:
 <segmento 3>
 ```
 
-Esse formato funciona bem — mas e se você quiser algo diferente?
+Esse formato funciona bem. Mas e se você quiser algo diferente?
 
 <div class="dica">
 <strong>Por que customizar?</strong> Diferentes LLMs respondem melhor a diferentes formatos de prompt. Ajustar o injector pode melhorar a qualidade das respostas.
@@ -638,7 +622,7 @@ Esse formato funciona bem — mas e se você quiser algo diferente?
 
 ---
 
-## Criando um Content Injector customizado
+## Content Injector customizado
 
 Edite o método `create` em `RagRetriever.java`:
 
@@ -670,7 +654,7 @@ return DefaultRetrievalAugmentor.builder()
 
 ## Resultado do injector customizado
 
-O log do tutorial mostra exatamente o prompt que chega à OpenAI:
+O log mostra o prompt que chega à OpenAI:
 
 ```json
 {
@@ -689,23 +673,23 @@ Please, only use the following information:
 
 - Instrução mais diretiva: `"Please, only use the following information"`
 - Segmentos listados com `- ` em vez de texto corrido
-- O tutorial ressalta: este injector não muda o *comportamento*, mas mostra como **customizar** o padrão para qualquer necessidade
+- Mostra como **customizar** o padrão para qualquer necessidade
 
 ---
 
-## Outras possibilidades de customização do RAG
+## Outras possibilidades de customização
 
-O tutorial destaca que o RAG pode ser extendido muito além do que vimos:
+O RAG pode ser estendido muito além do que vimos:
 
-- 🔢 **Diferentes embedding models** — trocar o BGE-Small-EN por outro modelo local ou remoto
-- 🗄️ **Diferentes vector stores** — Redis, Infinispan, Chroma, e muitos outros além do pgVector
-- 🔎 **Múltiplos retrievers** — combinar resultados de fontes diferentes
-- 🎯 **Min Score Filter** — só injetar segmentos com similaridade acima de um limiar
-- 🏷️ **Metadata Filter** — filtrar segmentos por categoria, data, departamento, etc.
-- ✍️ **Content Injector customizado** — como acabamos de ver, controle total sobre o formato do prompt
+- 🔢 **Outros embedding models:** trocar o BGE Small EN por outro modelo
+- 🗄️ **Outros vector stores:** Redis, Infinispan, Chroma e muitos outros
+- 🔎 **Múltiplos retrievers:** combinar resultados de fontes diferentes
+- 🎯 **Min Score Filter:** só injetar segmentos acima de um limiar
+- 🏷️ **Metadata Filter:** filtrar por categoria, data, departamento, etc.
+- ✍️ **Content Injector customizado:** controle total sobre o prompt
 
 <div class="dica">
-O tutorial apresenta um diagrama chamado <em>Advanced Augmentation</em> mostrando que o pipeline pode ter múltiplas etapas de retrieval, re-ranking e injeção configuráveis.
+O tutorial apresenta um diagrama <em>Advanced Augmentation</em>: o pipeline pode ter várias etapas de retrieval, re-ranking e injeção configuráveis.
 </div>
 
 ---
@@ -730,7 +714,7 @@ O tutorial apresenta um diagrama chamado <em>Advanced Augmentation</em> mostrand
   <div class="flow-node">
     <span class="node-icon">🔢</span>
     <span class="node-label">Embeddings</span>
-    <span class="node-desc">BGE-Small-EN<br>local/OpenAI</span>
+    <span class="node-desc">BGE Small EN<br>local ou OpenAI</span>
   </div>
   <div class="flow-arrow">⟶</div>
   <div class="flow-node">
@@ -754,14 +738,14 @@ O tutorial apresenta um diagrama chamado <em>Advanced Augmentation</em> mostrand
 
 ## O que vem depois?
 
-Os próximos steps da **Section 1 — AI Apps**:
+Os próximos steps da **Section 1, AI Apps**:
 
-- 🔧 **Step 07** — Function calling e tools — o LLM chama funções Java da sua aplicação
-- 🔗 **Step 08** — Model Context Protocol (MCP) — protocolo padronizado para tools
-- 🛡️ **Step 09** — Guardrails — validar e filtrar entradas e saídas do LLM
-- 📊 **Step 10** — Observabilidade e tolerância a falhas — métricas, traces, circuit breaker
+- 🔧 **Step 07:** Function calling e tools. O LLM chama funções Java
+- 🔗 **Step 08:** Model Context Protocol (MCP), protocolo padronizado para tools
+- 🛡️ **Step 09:** Guardrails, validar e filtrar entradas e saídas do LLM
+- 📊 **Step 10:** Observabilidade e tolerância a falhas
 
-E depois, a **Section 2 — Agentic Workflows**: agentes autônomos, supervisor pattern, human-in-the-loop, agentes remotos (A2A), multimodalidade.
+E depois, a **Section 2, Agentic Workflows**: agentes autônomos, supervisor pattern, human in the loop, agentes remotos (A2A), multimodalidade.
 
 ---
 
@@ -772,10 +756,10 @@ E depois, a **Section 2 — Agentic Workflows**: agentes autônomos, supervisor 
 | **RAG** | Injetar contexto relevante no prompt para guiar o LLM |
 | **Embedding** | Representação numérica vetorial de texto |
 | **Chunking** | Divisão de documentos em segmentos menores |
-| **Vector Store** | Banco de dados otimizado para busca por similaridade |
-| **Cosine Similarity** | Métrica para comparar quão "próximos" dois vetores são |
-| **EasyRAG** | Abstração de alto nível que automatiza todo o pipeline RAG |
-| **Content Injector** | Componente que formata como os segmentos entram no prompt |
+| **Vector Store** | Banco otimizado para busca por similaridade |
+| **Cosine Similarity** | Métrica de proximidade entre dois vetores |
+| **EasyRAG** | Abstração que automatiza todo o pipeline RAG |
+| **Content Injector** | Componente que formata segmentos no prompt |
 
 ---
 
@@ -783,16 +767,16 @@ E depois, a **Section 2 — Agentic Workflows**: agentes autônomos, supervisor 
 
 **Tutorial oficial**
 
-- 📖 [Step 05 — EasyRAG](https://quarkus.io/quarkus-workshop-langchain4j/section-1/step-05/)
-- 📖 [Step 06 — Deconstructing RAG](https://quarkus.io/quarkus-workshop-langchain4j/section-1/step-06/)
+- 📖 [Step 05, EasyRAG](https://quarkus.io/quarkus-workshop-langchain4j/section-1/step-05/)
+- 📖 [Step 06, Deconstructing RAG](https://quarkus.io/quarkus-workshop-langchain4j/section-1/step-06/)
 
 **Documentação**
 
-- 📖 [Quarkus LangChain4j — EasyRAG](https://docs.quarkiverse.io/quarkus-langchain4j/dev/rag-easy-rag.html)
-- 📖 [Quarkus LangChain4j — pgVector Store](https://docs.quarkiverse.io/quarkus-langchain4j/dev/rag-pgvector-store.html)
-- 📖 [BGE-Small-EN no HuggingFace](https://huggingface.co/neuralmagic/bge-small-en-v1.5-quant)
+- 📖 [Quarkus LangChain4j, EasyRAG](https://docs.quarkiverse.io/quarkus-langchain4j/dev/rag-easy-rag.html)
+- 📖 [Quarkus LangChain4j, pgVector Store](https://docs.quarkiverse.io/quarkus-langchain4j/dev/rag-pgvector-store.html)
+- 📖 [BGE Small EN no HuggingFace](https://huggingface.co/neuralmagic/bge-small-en-v1.5-quant)
 
 **Conceitos**
 
-- 🔗 [IBM — O que é RAG](https://research.ibm.com/blog/retrieval-augmented-generation-RAG)
-- 🔗 [Cosine Similarity — Wikipedia](https://en.wikipedia.org/wiki/Cosine_similarity)
+- 🔗 [IBM, O que é RAG](https://research.ibm.com/blog/retrieval-augmented-generation-RAG)
+- 🔗 [Cosine Similarity (Wikipedia)](https://en.wikipedia.org/wiki/Cosine_similarity)

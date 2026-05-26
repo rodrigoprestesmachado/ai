@@ -200,7 +200,7 @@ A diferença entre as duas abordagens é nítida:
 | Servidor recebe tudo e envia                   | LLM envia o token 2 → cliente já vê!              |
 | Usuário vê a resposta de uma vez               | LLM continua… resposta aparece em tempo real      |
 
-## Step 4: System Messages
+## System Messages
 
 O último passo para tornar a aplicação útil em um cenário real é **definir o papel** que o modelo deve assumir. Para isso, é importante entender que, em uma conversa com um LLM, existem três tipos de mensagens:
 {: .fs-3 }
