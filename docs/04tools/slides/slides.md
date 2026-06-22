@@ -66,10 +66,10 @@ Note: O RAG foi projetado para busca de conhecimento. Para operações transacio
 
 LLMs são, por natureza, **stateless e passivos**:
 
-- Recebem um prompt → geram texto
-- Não têm acesso ao banco de dados da sua aplicação
-- Não conhecem dados criados após o treinamento
-- Não podem executar nenhuma ação por conta própria
+* Recebem um prompt → geram texto
+* Não têm acesso ao banco de dados da sua aplicação
+* Não conhecem dados criados após o treinamento
+* Não podem executar nenhuma ação por conta própria
 
 **Function Calling** é o mecanismo que quebra essa limitação:
 
@@ -167,7 +167,7 @@ A aplicação <strong>nunca perde o controle</strong>. O LLM apenas solicita —
 <ul>
 <li>Busca em documentos estáticos</li>
 <li>Injeção de contexto no prompt</li>
-<li>Leitura apenas (read-only)</li>
+<li>Somente leitura</li>
 <li>Ideal para: FAQs, políticas, manuais</li>
 <li>Conhecimento atualizado por reingestão</li>
 </ul>
@@ -175,9 +175,9 @@ A aplicação <strong>nunca perde o controle</strong>. O LLM apenas solicita —
 <div class="col">
 <h3>🔧 Function Calling</h3>
 <ul>
-<li>Acesso a dados dinâmicos/em tempo real</li>
+<li>Acesso a dados dinâmicos em tempo real</li>
 <li>Execução de lógica de negócio</li>
-<li>Leitura e escrita (read-write)</li>
+<li>Leitura e escrita</li>
 <li>Ideal para: reservas, pedidos, contas</li>
 <li>Dados sempre atualizados via banco/API</li>
 </ul>
@@ -246,9 +246,9 @@ public class Customer extends PanacheEntity {
 }
 ```
 
-- `PanacheEntity` fornece o campo `id` e os métodos CRUD básicos
-- O método de busca usa `LOWER()` para pesquisa case-insensitive
-- O retorno `Optional<Customer>` força o tratamento de "não encontrado"
+* `PanacheEntity` fornece o campo `id` e os métodos CRUD básicos
+* O método de busca usa `LOWER()` para pesquisa sem distinção de maiúsculas
+* O retorno `Optional<Customer>` força o tratamento de "não encontrado"
 
 Note: A busca case-insensitive é importante porque o LLM pode capitalizar nomes de formas diferentes a cada interação.
 
@@ -269,9 +269,9 @@ public class Booking extends PanacheEntity {
 }
 ```
 
-- Relacionamento `@ManyToOne` com `Customer`
-- Datas em `LocalDate` (tipo mais seguro que `Date` para lógica de calendário)
-- Um cliente pode ter **múltiplas** reservas
+* Relacionamento `@ManyToOne` com `Customer`
+* Datas em `LocalDate` (tipo mais seguro que `Date` para lógica de calendário)
+* Um cliente pode ter **múltiplas** reservas
 
 ---
 
@@ -364,9 +364,9 @@ public List<Booking> listBookingsForCustomer(
 }
 ```
 
-- O LLM chama essa tool quando o usuário quer ver suas reservas
-- Se o cliente não for encontrado, a exceção é propagada ao LLM
-- `@Transactional` garante consistência no acesso ao banco
+* O LLM chama essa tool quando o usuário quer ver suas reservas
+* Se o cliente não for encontrado, a exceção é propagada ao LLM
+* `@Transactional` garante consistência no acesso ao banco
 
 ---
 
@@ -391,8 +391,8 @@ public Booking getBookingDetails(
 }
 ```
 
-- Validação dupla: a reserva existe **e** pertence ao cliente
-- Evita que um cliente acesse dados de outro — **segurança**
+* Validação dupla: a reserva existe **e** pertence ao cliente
+* Evita que um cliente acesse dados de outro — **segurança**
 
 Note: Esta é uma validação de autorização simples. Em produção, use tokens de sessão e nunca confie apenas nos dados fornecidos pelo LLM.
 
@@ -554,12 +554,12 @@ As <strong>regras de negócio vivem no código Java</strong>, não no prompt. O 
 
 ## O que aprendemos
 
-- **Function Calling** complementa o RAG, permitindo ao LLM **executar ações** além de responder perguntas
-- **`@Tool`** marca um método Java como função chamável pelo LLM
-- **`@ToolBox`** conecta as tools ao AI Service
-- **Exceções** são o mecanismo para comunicar erros e regras de negócio ao LLM
-- O LLM pode **encadear múltiplas chamadas** de função para completar uma tarefa
-- A aplicação **mantém o controle**: o LLM solicita, a aplicação executa
+* **Function Calling** complementa o RAG, permitindo ao LLM **executar ações** além de responder perguntas
+* **`@Tool`** marca um método Java como função chamável pelo LLM
+* **`@ToolBox`** conecta as tools ao AI Service
+* **Exceções** são o mecanismo para comunicar erros e regras de negócio ao LLM
+* O LLM pode **encadear múltiplas chamadas** de função para completar uma tarefa
+* A aplicação **mantém o controle**: o LLM solicita, a aplicação executa
 
 ---
 
@@ -567,14 +567,14 @@ As <strong>regras de negócio vivem no código Java</strong>, não no prompt. O 
 
 **Tutorial oficial**
 
-- 📖 [Step 07, Function calling and Tools](https://quarkus.io/quarkus-workshop-langchain4j/section-1/step-07/)
+* 📖 [Step 07, Function calling and Tools](https://quarkus.io/quarkus-workshop-langchain4j/section-1/step-07/)
 
 **Documentação**
 
-- 📖 [Quarkus LangChain4j, Tools](https://docs.quarkiverse.io/quarkus-langchain4j/dev/agent-and-tools.html)
-- 📖 [Quarkus Hibernate ORM com Panache](https://quarkus.io/guides/hibernate-orm-panache)
+* 📖 [Quarkus LangChain4j, Tools](https://docs.quarkiverse.io/quarkus-langchain4j/dev/agent-and-tools.html)
+* 📖 [Quarkus Hibernate ORM com Panache](https://quarkus.io/guides/hibernate-orm-panache)
 
 **Conceitos**
 
-- 🔗 [OpenAI, Function Calling](https://platform.openai.com/docs/guides/function-calling)
-- 🔗 [LangChain4j, Tools & Agents](https://docs.langchain4j.dev/tutorials/tools)
+* 🔗 [OpenAI, Function Calling](https://platform.openai.com/docs/guides/function-calling)
+* 🔗 [LangChain4j, Tools & Agents](https://docs.langchain4j.dev/tutorials/tools)

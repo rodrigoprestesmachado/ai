@@ -170,9 +170,9 @@ public class BookingRepository implements PanacheRepository<Booking> {
 As três tools expostas são:
 {: .fs-3 }
 
-- **`cancelBooking`** — cancela uma reserva, verificando as regras de negócio (prazo mínimo de 11 dias e duração mínima de 4 dias).
-- **`listBookingsForCustomer`** — lista todas as reservas de um cliente pelo nome.
-- **`getBookingDetails`** — retorna os detalhes de uma reserva específica, validando que ela pertence ao cliente informado.
+* **`cancelBooking`** — cancela uma reserva, verificando as regras de negócio (prazo mínimo de 11 dias e duração mínima de 4 dias).
+* **`listBookingsForCustomer`** — lista todas as reservas de um cliente pelo nome.
+* **`getBookingDetails`** — retorna os detalhes de uma reserva específica, validando que ela pertence ao cliente informado.
 {: .fs-3 }
 
 ### Configurando o AI Service com `@ToolBox`
