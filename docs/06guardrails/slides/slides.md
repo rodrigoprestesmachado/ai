@@ -90,20 +90,7 @@ Note: A diferença entre as duas colunas nem sempre é óbvia para regras fixas.
 
 Guardrails são funções executadas **antes** e **depois** da chamada ao LLM para garantir segurança e confiabilidade.
 
-```mermaid
-flowchart LR
-    U(["Usuário"]) --> IG["INPUT GUARDRAIL\nvalida ANTES\nprompt injection"]
-    IG -->|aprovado| LLM["LLM principal"]
-    IG -->|bloqueado| E(["Erro seguro"])
-    LLM --> OG["OUTPUT GUARDRAIL\nvalida DEPOIS\nvazamento e alucinacoes"]
-    OG --> R(["Resposta"])
-    style IG fill:#1a2540,stroke:#4695eb,color:#e2e8f0
-    style OG fill:#1a2540,stroke:#4695eb,color:#e2e8f0
-    style LLM fill:#1a2540,stroke:#ff004a,color:#e2e8f0
-    style U fill:#0f1526,stroke:#4695eb,color:#e2e8f0
-    style R fill:#0f1526,stroke:#22c55e,color:#22c55e
-    style E fill:#0f1526,stroke:#ff004a,color:#ff4472
-```
+<img src="https://kroki.io/plantuml/svg/fVLdTsIwFL7vUxzhmmQsjCgmBpRJliAzgz3AYTvDStfOrkPj2_gsvpjdADMRvVm676ff19OOS4PaVLlgF-aJcoJCIJes3HJZoMYc1phsN1pVMr1TQmkwGmVpKZKmpUopw0qYFb2ZieAbmVsaEvsh3VJpSgzKjaBbpVPS-w27g-GVR-uzspPsbh9db-Cck94raQ4icukya4tQa_X6VxgmRun_--wlp12crO-5w1PZ7x6swaETl9Xnh-aqA1hCzNh3degEi8d4BbN4Ek2jSTBnOxQ8RZgsVv6SFVrlhQEun62BK9n4g1nbP58_QKG5THiBouFr5DCta8EljbpZ5jgDbLvCeHU2duo_hsHS_r1jfY0KCFBUCZeYKCqb7cMf8RGVhbLvqKGi42QOua6beB615b69DihpU-n9LPwTx6Epi6HXu6lPGsyaVX2mEaCdxw5TdUR9i62FeqmoBmtNjdqC4Z6P2Jhkah_4Fw" alt="Guardrails: input e output" style="max-height:380px; width:auto; max-width:100%;">
 
 <div class="destaque">
 Neste step focamos no <strong>input guardrail</strong>: validar a mensagem do usuário antes que ela chegue ao agente com acesso a funções e dados.

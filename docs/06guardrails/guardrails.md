@@ -59,35 +59,9 @@ As duas técnicas são **complementares** e podem ser combinadas no mesmo AI Ser
 
 ## Fluxo completo
 
-```mermaid
-sequenceDiagram
-    participant User as Usuário
-    participant WS as WebSocket
-    participant Guard as PromptInjectionGuard
-    participant Detect as DetectionService
-    participant Agent as CustomerSupportAgent
-    participant LLM as OpenAI
-
-    User->>WS: mensagem
-    WS->>Agent: chat(mensagem)
-    Agent->>Guard: validate(userMessage)
-    Guard->>Detect: isInjection(texto)
-    Detect->>LLM: few-shot prompt
-    LLM-->>Detect: score 0.0 a 1.0
-    Detect-->>Guard: score
-
-    alt score > 0.7
-        Guard-->>Agent: failure
-        Agent-->>WS: InputGuardrailException
-        WS-->>User: resposta segura de erro
-    else score <= 0.7
-        Guard-->>Agent: success
-        Agent->>LLM: system + tools + mensagem
-        LLM-->>Agent: resposta
-        Agent-->>WS: resposta
-        WS-->>User: resposta do bot
-    end
-```
+<center>
+<img src="https://kroki.io/plantuml/svg/hZNNbtswEIX3PMUg2dgoHDip0yZCGyRNf2AgQQMYgdcUNXZUSxx2OEzS4_QsvVhJWv5RkbZaSMS8b6g3T9SlF80S2kb5VW2dZt1Cqc1qyRRsdU0NMQhr66OEVvYoj98DWoN3sb82tdNWPhBXyOumw8mb81Ms_9Pwx5sOj_XJ6WT876bPZKXD8QTPFvu4ZqanTjyf6NflmVJu1woH9z78-sk1HYD2cO-R-_IcyxmZFUrW57O-esfUOpnab2ikJvslaK4ymFd99iPKmpohP9YGM7cu9sHr4IVa5FlwjliuljHmDOdVn_3q0F5Ns3pzc6tUGgBGF9FoAS1ar5fYqvkslXJ3AeZBy2AjDVWuJjk7LuBRN3WlBQch7nSLPmFDlcVErf0WUPvt0APBZ6GhWksJik4KWODTyD-QgMsZqViE0d4O3hAjjI_GoOH4aLxt31nJhFK6kQ6-iPhbBfHq_OymWui6CZFOYjdSl8LUuiCZ58h8ejbokutMpmAilkIrgNE7ioc_nrBlYA0VAsbDo7Dx2Bl49_7vDnwwJsa176BLwv_wgi28AiFqfHxuP0xiN7l022xcvDBJT3rZekVQkii0lbqMt_gX_wY" alt="Fluxo completo do guardrail" width="100%">
+</center>
 {: .fs-3 }
 
 ## O problema: prompt injection
