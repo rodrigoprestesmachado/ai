@@ -10,6 +10,7 @@
       div.textContent = el.textContent;
       el.parentElement.replaceWith(div);
     });
-    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    mermaid.initialize({ startOnLoad: false, theme: 'neutral' });
+    mermaid.run();
   });
 </script>

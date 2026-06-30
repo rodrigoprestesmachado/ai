@@ -73,7 +73,7 @@ sequenceDiagram
     Agent->>Guard: validate(userMessage)
     Guard->>Detect: isInjection(texto)
     Detect->>LLM: few-shot prompt
-    LLM-->>Detect: score 0.0–1.0
+    LLM-->>Detect: score 0.0 a 1.0
     Detect-->>Guard: score
 
     alt score > 0.7

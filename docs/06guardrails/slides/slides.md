@@ -92,12 +92,11 @@ Guardrails são funções executadas **antes** e **depois** da chamada ao LLM pa
 
 ```mermaid
 flowchart LR
-    U(["👤 Usuário"]) --> IG
-    IG["🛡️ INPUT GUARDRAIL\nvalida ANTES\nprompt injection"]
-    IG -->|"✅ aprovado"| LLM["🤖 LLM\nprincipal"]
-    IG -->|"⛔ bloqueado"| E(["Erro\nseguro"])
-    LLM --> OG["🛡️ OUTPUT GUARDRAIL\nvalida DEPOIS\nvazamento · alucinações"]
-    OG --> R(["✅ Resposta"])
+    U(["Usuário"]) --> IG["INPUT GUARDRAIL\nvalida ANTES\nprompt injection"]
+    IG -->|aprovado| LLM["LLM principal"]
+    IG -->|bloqueado| E(["Erro seguro"])
+    LLM --> OG["OUTPUT GUARDRAIL\nvalida DEPOIS\nvazamento e alucinacoes"]
+    OG --> R(["Resposta"])
     style IG fill:#1a2540,stroke:#4695eb,color:#e2e8f0
     style OG fill:#1a2540,stroke:#4695eb,color:#e2e8f0
     style LLM fill:#1a2540,stroke:#ff004a,color:#e2e8f0
