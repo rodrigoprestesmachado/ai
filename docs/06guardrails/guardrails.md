@@ -368,17 +368,6 @@ Nos bastidores, para o ataque óbvio:
 Verifique nos logs o score retornado pelo `PromptInjectionDetectionService` para cada mensagem enviada.
 {: .fs-3 }
 
-## O que aprendemos
-
-* **Prompt injection** explora a obediência do LLM a instruções em linguagem natural
-* Function Calling e MCP **amplificam** o risco, pois o LLM pode executar ações reais
-* **Guardrails** validam a interação antes (input) e depois (output) do LLM
-* Um **AI Service de detecção** com few-shot pontua a entrada de 0.0 a 1.0
-* **`InputGuardrail`** + threshold decide bloquear ou permitir
-* **`@InputGuardrails`** ativa o guardrail no AI Service, antes das tools
-* Capturar **`InputGuardrailException`** garante uma resposta segura ao usuário
-{: .fs-3 }
-
 ## Tarefa para casa
 
 **Objetivo:** executar o **Step 09** localmente e validar o guardrail com três tipos de mensagem.

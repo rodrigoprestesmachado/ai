@@ -1,0 +1,15 @@
+<!-- Mermaid: converte blocos ```mermaid em diagramas renderizados -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // kramdown gera <pre><code class="language-mermaid">...</code></pre>
+    // Mermaid espera <div class="mermaid">...</div>
+    document.querySelectorAll('pre code.language-mermaid').forEach(function (el) {
+      var div = document.createElement('div');
+      div.classList.add('mermaid');
+      div.textContent = el.textContent;
+      el.parentElement.replaceWith(div);
+    });
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+  });
+</script>

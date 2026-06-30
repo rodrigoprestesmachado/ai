@@ -90,14 +90,20 @@ Note: A diferença entre as duas colunas nem sempre é óbvia para regras fixas.
 
 Guardrails são funções executadas **antes** e **depois** da chamada ao LLM para garantir segurança e confiabilidade.
 
-```
-            ┌──────────────┐         ┌──────────────┐
-Usuário ──► │   INPUT      │ ──────► │   LLM        │
-            │   GUARDRAIL  │         │   principal  │
-            └──────────────┘         └──────────────┘
-                  │                         │
-            valida ANTES              OUTPUT GUARDRAIL
-            (prompt injection)        valida DEPOIS
+```mermaid
+flowchart LR
+    U(["👤 Usuário"]) --> IG
+    IG["🛡️ INPUT GUARDRAIL\nvalida ANTES\nprompt injection"]
+    IG -->|"✅ aprovado"| LLM["🤖 LLM\nprincipal"]
+    IG -->|"⛔ bloqueado"| E(["Erro\nseguro"])
+    LLM --> OG["🛡️ OUTPUT GUARDRAIL\nvalida DEPOIS\nvazamento · alucinações"]
+    OG --> R(["✅ Resposta"])
+    style IG fill:#1a2540,stroke:#4695eb,color:#e2e8f0
+    style OG fill:#1a2540,stroke:#4695eb,color:#e2e8f0
+    style LLM fill:#1a2540,stroke:#ff004a,color:#e2e8f0
+    style U fill:#0f1526,stroke:#4695eb,color:#e2e8f0
+    style R fill:#0f1526,stroke:#22c55e,color:#22c55e
+    style E fill:#0f1526,stroke:#ff004a,color:#ff4472
 ```
 
 <div class="destaque">

@@ -9,9 +9,6 @@ nav_order: 1
 Material didático em português para o [Quarkus LangChain4j Workshop](https://quarkus.io/quarkus-workshop-langchain4j/), com slides de apresentação e texto aprofundado contendo código, diagramas e exercícios práticos.
 {: .fs-3 }
 
-O objetivo deste site é ir além do tutorial oficial: explicar **por que** cada peça existe, **como** ela se encaixa na arquitetura e **o que** você deve experimentar localmente para fixar o aprendizado.
-{: .fs-3 }
-
 ## Sobre o workshop
 
 O workshop usa **Quarkus** e **LangChain4j** para ensinar, passo a passo, como construir aplicações Java que integram modelos de linguagem (LLMs). Todos os exemplos giram em torno da locadora fictícia **Miles of Smiles**: um chatbot de atendimento ao cliente que, ao longo das seções, ganha RAG, tools, MCP, guardrails e, na Section 2, agentes autônomos para gerenciar a frota de veículos.
@@ -19,12 +16,12 @@ O workshop usa **Quarkus** e **LangChain4j** para ensinar, passo a passo, como c
 
 ## Jornada de aprendizado
 
-O conteúdo está organizado em dois trilhos sequenciais:
+O conteúdo está organizado em duas partes sequenciais:
 {: .fs-3 }
 
 ### 1. [Introdução](01introducao/introducao.html)
 
-Ponto de partida obrigatório. Configure o ambiente, obtenha a API key da OpenAI e execute o primeiro chatbot Quarkus localmente.
+Configure o ambiente, obtenha a API key da OpenAI e execute o primeiro chatbot Quarkus localmente.
 
 ### 2. [AI Services](aiservices/)
 

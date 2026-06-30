@@ -573,6 +573,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/markdown/markdown.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/notes/notes.min.js"></script>
@@ -609,6 +610,18 @@
 
         Reveal.on('ready', addLineNumbers);
         Reveal.on('slidechanged', addLineNumbers);
+
+        /* Mermaid: converte blocos ```mermaid em diagramas SVG */
+        mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+        Reveal.on('ready', function () {
+            document.querySelectorAll('pre code.language-mermaid').forEach(function (el) {
+                var div = document.createElement('div');
+                div.classList.add('mermaid');
+                div.textContent = el.textContent;
+                el.closest('pre').replaceWith(div);
+            });
+            mermaid.run();
+        });
     </script>
 </body>
 </html>
