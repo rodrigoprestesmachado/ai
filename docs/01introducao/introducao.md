@@ -10,7 +10,7 @@ nav_order: 2
 <iframe src="https://ai.rpmhub.dev/01introducao/slides/index.html#/" title="Introdução" width="90%" height="500" style="border:none;"></iframe>
 </center>
 
-O **Step 01** do workshop é o ponto de partida: você sobe uma aplicação Quarkus que conversa com um LLM via OpenAI e testa um chatbot funcional no navegador. Ao final deste capítulo, você terá passado pelo fluxo completo de ambiente, credencial e execução — o mesmo tipo de passo que repetirá em projetos reais.
+O **Step 01** do workshop é o ponto de partida: você sobe uma aplicação Quarkus que conversa com um LLM via OpenAI e testa um chatbot funcional no navegador. Ao final deste capítulo, você terá passado pelo fluxo completo de ambiente, credencial e execução, o mesmo tipo de passo que repetirá em projetos reais.
 {: .fs-3 }
 
 ## O que você vai aprender
@@ -26,7 +26,7 @@ O **Step 01** do workshop é o ponto de partida: você sobe uma aplicação Quar
 
 ### Quarkus + LangChain4j
 
-**Quarkus** é um framework Java otimizado para cloud-native: inicia rápido, consome pouca memória e oferece live reload no modo dev. **LangChain4j** é a biblioteca Java que abstrai chamadas a LLMs — em vez de montar JSON de requisição manualmente, você declara uma interface e a biblioteca cuida do resto.
+**Quarkus** é um framework Java otimizado para cloud-native: inicia rápido, consome pouca memória e oferece live reload no modo dev. **LangChain4j** é a biblioteca Java que abstrai chamadas a LLMs. Em vez de montar JSON de requisição manualmente, você declara uma interface e a biblioteca cuida do resto.
 {: .fs-3 }
 
 A extensão **Quarkus LangChain4j** integra tudo ao CDI: lê `application.properties`, gera a implementação do AI Service em build time e injeta beans com `@Inject`.
@@ -34,7 +34,7 @@ A extensão **Quarkus LangChain4j** integra tudo ao CDI: lê `application.proper
 
 ### AI Service
 
-Um AI Service é uma **interface Java** anotada com `@RegisterAiService`. Não há implementação manual — o Quarkus gera o código em tempo de compilação:
+Um AI Service é uma **interface Java** anotada com `@RegisterAiService`. Não há implementação manual; o Quarkus gera o código em tempo de compilação:
 {: .fs-3 }
 
 ```java
@@ -118,10 +118,10 @@ sequenceDiagram
 
 ## Tarefa para casa
 
-**Objetivo:** executar localmente o **Step 01** do workshop oficial — subir o projeto Quarkus + LangChain4j e conversar com o chatbot.
+**Objetivo:** executar localmente o **Step 01** do workshop oficial: subir o projeto Quarkus + LangChain4j e conversar com o chatbot.
 {: .fs-3 }
 
-**Referência:** [Quarkus LangChain4j Workshop — Section 1, Step 01](https://quarkus.io/quarkus-workshop-langchain4j/section-1/step-01/).
+**Referência:** [Quarkus LangChain4j Workshop, Section 1, Step 01](https://quarkus.io/quarkus-workshop-langchain4j/section-1/step-01/).
 {: .fs-3 }
 
 ### Pré-requisitos
@@ -164,7 +164,7 @@ Você envia uma mensagem (por exemplo, "Olá, quero alugar um carro") e recebe u
 
 ## Próximo passo
 
-Com o chatbot funcionando, avance para o trilho [AI Services](../aiservices/) — começando por [Configuration and Streaming](../02streaming/streaming.html), onde você aprende a ajustar parâmetros do modelo, fazer streaming de respostas e definir system messages.
+Com o chatbot funcionando, avance para o trilho [AI Services](../aiservices/). Comece por [Configuration and Streaming](../02streaming/streaming.html), onde você aprende a ajustar parâmetros do modelo, fazer streaming de respostas e definir system messages.
 {: .fs-3 }
 
 # Referência

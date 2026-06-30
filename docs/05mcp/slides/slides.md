@@ -43,7 +43,7 @@ No Step 07, as tools eram executadas **dentro da própria aplicação**:
 ```
 Aplicação Java
 ├── CustomerSupportAgent  (AI Service)
-├── BookingRepository     (@Tool — local)
+├── BookingRepository     (@Tool, local)
 └── LLM ────────────────── chama BookingRepository diretamente
 ```
 
@@ -58,7 +58,7 @@ Isso funciona bem para lógica de negócio própria. Mas e quando a tool precisa
 Function Calling local não atende a esses requisitos. Precisamos de um protocolo distribuído.
 </div>
 
-Note: O Function Calling local é como uma chamada de método. O MCP é como uma chamada de API — permite separação de responsabilidades e reuso entre aplicações.
+Note: O Function Calling local é como uma chamada de método. O MCP é como uma chamada de API; permite separação de responsabilidades e reuso entre aplicações.
 
 ---
 
@@ -253,7 +253,7 @@ public interface WeatherClient {
 
 * `@RegisterRestClient` registra a interface como cliente REST no CDI
 * `configKey = "weatherclient"` mapeia para propriedades `quarkus.rest-client."weatherclient".*`
-* Quarkus gera automaticamente a implementação — **zero código de plumbing**
+* Quarkus gera automaticamente a implementação (**zero código de plumbing**)
 
 Note: A anotação @RestQuery equivale a @QueryParam do JAX-RS, mas com menos verbosidade. O Quarkus cuida da serialização dos parâmetros na URL.
 
@@ -455,7 +455,7 @@ Note: O system message instrui o LLM a usar a previsão do tempo para fazer upse
 
 ## O que o LLM enxerga
 
-Do ponto de vista do LLM, ele recebe uma lista consolidada de tools — sem distinção entre locais e remotas:
+Do ponto de vista do LLM, ele recebe uma lista consolidada de tools, sem distinção entre locais e remotas:
 
 ```json
 {
@@ -504,7 +504,7 @@ O LLM <strong>não sabe</strong> se a tool é local ou remota. O framework cuida
 <p><strong>Usuário:</strong> I'd like information about my booking.</p>
 <p><strong>AI:</strong> Sure! Please provide your name and booking ID.</p>
 <p><strong>Usuário:</strong> I'm Speedy McWheels, booking ID 2.</p>
-<p><strong>AI:</strong> Booking #2 — São Paulo, Sep 17–19.</p>
+<p><strong>AI:</strong> Booking #2, São Paulo, Sep 17-19.</p>
 <p><strong>Usuário:</strong> Do I need snow chains?</p>
 <p><strong>AI:</strong> For São Paulo in September: 23–25°C, no precipitation expected. Snow chains won't be needed, but a light jacket is recommended for the evenings!</p>
 </div>
@@ -554,11 +554,11 @@ Os logs mostram o protocolo MCP em ação: primeiro o cliente descobre as tools 
 ## O que aprendemos
 
 * **MCP** é o protocolo padrão para conectar agentes de IA a ferramentas e dados externos
-* Um **MCP Server** expõe tools via HTTP/SSE — em qualquer linguagem, em qualquer infraestrutura
+* Um **MCP Server** expõe tools via HTTP/SSE, em qualquer linguagem, em qualquer infraestrutura
 * Um **MCP Client** descobre e invoca essas tools de forma transparente para o LLM
 * **`@McpToolBox`** conecta o AI Service ao servidor MCP pelo nome configurado
 * **Tools locais e remotas coexistem** no mesmo AI Service sem conflito
-* O LLM **não distingue** tools locais de remotas — o framework gerencia a roteação
+* O LLM **não distingue** tools locais de remotas; o framework gerencia a roteação
 * MCP transforma o ecossistema de ferramentas em um **marketplace reutilizável**
 
 ---
@@ -576,6 +576,6 @@ Os logs mostram o protocolo MCP em ação: primeiro o cliente descobre as tools 
 
 **Conceitos e ecossistema**
 
-* 🔗 [Model Context Protocol — Especificação oficial](https://modelcontextprotocol.io/)
-* 🔗 [MCP Servers — Diretório de servidores públicos](https://modelcontextprotocol.io/servers)
+* 🔗 [Model Context Protocol: Especificação oficial](https://modelcontextprotocol.io/)
+* 🔗 [MCP Servers: Diretório de servidores públicos](https://modelcontextprotocol.io/servers)
 * 🔗 [Open-Meteo API (usado no demo)](https://open-meteo.com/)

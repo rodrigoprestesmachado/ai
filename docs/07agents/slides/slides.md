@@ -21,7 +21,7 @@ Seu primeiro agente autônomo com Quarkus LangChain4j
 5. 🎬 **Demo:** dois cenários de devolução de carro
 
 <div class="destaque">
-<strong>Objetivo:</strong> construir um agente autônomo que analisa feedback e decide se um carro precisa de limpeza — com ou sem invocar a tool.
+<strong>Objetivo:</strong> construir um agente autônomo que analisa feedback e decide se um carro precisa de limpeza, com ou sem invocar a tool.
 </div>
 
 Note: Este é o primeiro step da Section 2. Você já domina AI Services; agora o LLM toma decisões e ações, não apenas responde perguntas.
@@ -51,7 +51,7 @@ Evento de negócio → Agente decide → Agente age (ou não)
 ```
 
 <div class="destaque">
-Agentes <strong>tomam decisões</strong> e <strong>executam ações</strong> com base em contexto — sem prompt explícito do usuário final.
+Agentes <strong>tomam decisões</strong> e <strong>executam ações</strong> com base em contexto, sem prompt explícito do usuário final.
 </div>
 
 ---
@@ -98,7 +98,7 @@ A Miles of Smiles precisa automatizar a devolução de carros:
 3. Após limpeza, carro volta ao pool **disponível**
 
 <div class="dica">
-Você construirá o <strong>CleaningAgent</strong> — especialista em decidir se um carro precisa de limpeza com base no feedback.
+Você construirá o <strong>CleaningAgent</strong>: especialista em decidir se um carro precisa de limpeza com base no feedback.
 </div>
 
 ---
@@ -112,8 +112,8 @@ cd section-2/step-01
 
 Abra `http://localhost:8080`:
 
-* **Fleet Status** — grade com todos os carros e status
-* **Action** — formulário de feedback para carros alugados ou em limpeza
+* **Fleet Status**: grade com todos os carros e status
+* **Action**: formulário de feedback para carros alugados ou em limpeza
 
 ---
 
@@ -121,14 +121,14 @@ Abra `http://localhost:8080`:
 
 <div class="two-col">
 <div class="col">
-<h3>Teste 1 — precisa limpeza</h3>
+<h3>Teste 1: precisa limpeza</h3>
 <pre><code>Car has dog hair all over
 the back seat</code></pre>
 <p>→ Status <code>AT_CLEANING</code></p>
 <p>→ Tool invocada ✅</p>
 </div>
 <div class="col">
-<h3>Teste 2 — carro limpo</h3>
+<h3>Teste 2: carro limpo</h3>
 <pre><code>Car looks good</code></pre>
 <p>→ Status <code>AVAILABLE</code></p>
 <p>→ <code>CLEANING_NOT_REQUIRED</code></p>
@@ -136,7 +136,7 @@ the back seat</code></pre>
 </div>
 </div>
 
-Note: O segundo teste demonstra raciocínio — o agente decide NÃO agir, sem chamar a tool.
+Note: O segundo teste demonstra raciocínio; o agente decide NÃO agir, sem chamar a tool.
 
 ---
 
@@ -227,7 +227,7 @@ public String processCarReturn(
 }
 ```
 
-O agente é um bean CDI — injete e invoque como qualquer serviço Quarkus.
+O agente é um bean CDI: injete e invoque como qualquer serviço Quarkus.
 
 ---
 
@@ -267,7 +267,7 @@ public class CleaningTool {
 }
 ```
 
-Tools em agentes funcionam **igual** à Section 1 — `@Tool` + `@ToolBox`.
+Tools em agentes funcionam **igual** à Section 1: `@Tool` + `@ToolBox`.
 
 ---
 
@@ -298,10 +298,10 @@ Usuário → REST → Service → CleaningAgent → LLM
 ## O que aprendemos
 
 * **AI Agents** tomam decisões autônomas com base em contexto
-* `@Agent` marca o ponto de entrada — **um método por interface**
+* `@Agent` marca o ponto de entrada (**um método por interface**)
 * Reutiliza `@SystemMessage`, `@UserMessage`, `@ToolBox` da Section 1
-* O agente pode **decidir não agir** — raciocínio sem tool call
-* Integração CDI transparente — `@Inject CleaningAgent`
+* O agente pode **decidir não agir** (raciocínio sem tool call)
+* Integração CDI transparente: `@Inject CleaningAgent`
 * Próximo: **workflows multi-agente** (Step 02)
 
 ---
@@ -310,7 +310,7 @@ Usuário → REST → Service → CleaningAgent → LLM
 
 1. Edge cases: `"The trunk smells like fish"`, `"Spotless condition"`
 2. Altere a system message para um especialista mais exigente
-3. Adicione parâmetro `tireCleaning` — o agente aprende?
+3. Adicione parâmetro `tireCleaning` e veja se o agente aprende a usá-lo
 
 ---
 
@@ -318,13 +318,13 @@ Usuário → REST → Service → CleaningAgent → LLM
 
 **Tutorial oficial**
 
-* 📖 [Section 2, Step 01 — Implementing AI Agents](https://quarkus.io/quarkus-workshop-langchain4j/section-2/step-01/)
+* 📖 [Section 2, Step 01: Implementing AI Agents](https://quarkus.io/quarkus-workshop-langchain4j/section-2/step-01/)
 
 **Documentação**
 
-* 📖 [LangChain4j — Agents](https://docs.langchain4j.dev/tutorials/agents/)
-* 📖 [Quarkus LangChain4j — Agentic](https://docs.quarkiverse.io/quarkus-langchain4j/dev/agentic.html)
+* 📖 [LangChain4j: Agents](https://docs.langchain4j.dev/tutorials/agents/)
+* 📖 [Quarkus LangChain4j: Agentic](https://docs.quarkiverse.io/quarkus-langchain4j/dev/agentic.html)
 
 **Próximo step**
 
-* ➡️ Step 02 — Creating simple agentic workflows
+* ➡️ Step 02: Creating simple agentic workflows

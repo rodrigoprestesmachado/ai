@@ -38,7 +38,7 @@ As chaves mais importantes têm os seguintes papéis:
 Além dessas configurações estruturais, três hiperparâmetros impactam diretamente o **estilo** e o **tamanho** das respostas: `temperature`, `max-completion-tokens` e `frequency-penalty`.
 {: .fs-3 }
 
-### Temperature — criatividade do modelo
+### Temperature: criatividade do modelo
 
 A propriedade `quarkus.langchain4j.openai.chat-model.temperature` controla o quanto o modelo é "criativo" ou "conservador" ao escolher cada token da resposta. Valores baixos tornam o modelo previsível; valores altos introduzem mais aleatoriedade.
 {: .fs-3 }
@@ -52,7 +52,7 @@ A propriedade `quarkus.langchain4j.openai.chat-model.temperature` controla o qua
 Um experimento simples é pedir ao modelo para descrever um pôr do sol com `temperature=0.1` e em seguida com `temperature=1.5`: a diferença de estilo e de variabilidade entre as respostas evidencia o efeito desse parâmetro.
 {: .fs-3 }
 
-### Max Tokens — limite da resposta
+### Max Tokens: limite da resposta
 
 A propriedade `quarkus.langchain4j.openai.chat-model.max-completion-tokens` define o **número máximo de tokens** que o modelo pode gerar como resposta. *Tokens* não são exatamente palavras: são as menores unidades em que o texto é segmentado pelo modelo. Como exemplo, a expressão `"Hello, world!"` corresponde a aproximadamente 4 *tokens*.
 {: .fs-3 }
@@ -68,15 +68,15 @@ quarkus.langchain4j.openai.chat-model.max-completion-tokens=1000
 Definir `max-completion-tokens=20` e enviar uma pergunta cuja resposta seja naturalmente longa é uma boa forma de observar o efeito do parâmetro: a resposta é interrompida abruptamente. Ajustando para `1000`, o modelo passa a ter espaço suficiente para concluir o raciocínio.
 {: .fs-3 }
 
-### Frequency Penalty — evitando repetições
+### Frequency Penalty: evitando repetições
 
 A propriedade `quarkus.langchain4j.openai.chat-model.frequency-penalty` define o quanto o modelo deve **evitar repetir** as mesmas palavras e expressões ao longo da resposta.
 {: .fs-3 }
 
 | Valor | Comportamento                                              | Resultado típico                            |
 |-------|------------------------------------------------------------|---------------------------------------------|
-| `0`   | Sem penalidade — o modelo pode repetir livremente          | `hedgehog hedgehog hedgehog...`             |
-| `2`   | Penalidade máxima — evita fortemente repetições            | `hedgehog... porcupine? spiky creature...`  |
+| `0`   | Sem penalidade; o modelo pode repetir livremente           | `hedgehog hedgehog hedgehog...`             |
+| `2`   | Penalidade máxima; evita fortemente repetições             | `hedgehog... porcupine? spiky creature...`  |
 
 Penalidades muito altas podem comprometer a coerência, gerando texto sem sentido. Um experimento didático é pedir "Repeat the word hedgehog 50 times" com `frequency-penalty=0` e depois com `frequency-penalty=2` e comparar os resultados.
 {: .fs-3 }
@@ -160,7 +160,7 @@ public interface CustomerSupportAgent {
 O *endpoint* WebSocket também precisa devolver um `Multi<String>`, em vez de aguardar uma `String` inteira:
 {: .fs-3 }
 
-**Antes** — retorna `String` (bloqueia até terminar):
+**Antes** (retorna `String`, bloqueia até terminar):
 
 ```java
 @OnTextMessage
@@ -169,7 +169,7 @@ public String onTextMessage(String message) {
 }
 ```
 
-**Depois** — retorna `Multi<String>` (streaming):
+**Depois** (retorna `Multi<String>`, streaming):
 
 ```java
 @OnTextMessage
@@ -217,10 +217,10 @@ O último passo para tornar a aplicação útil em um cenário real é **definir
 Uma **System Message** é uma diretiva que **guia o comportamento e o tom** do modelo durante toda a interação. Ela é invisível para o usuário final e cumpre quatro funções principais:
 {: .fs-3 }
 
-- **Define o papel do modelo** — por exemplo: "Você é um agente de suporte de aluguel de carros da Miles of Smiles".
-- **Controla o tom** — por exemplo: "Seja amigável, educado e conciso".
-- **Estabelece limites** — por exemplo: "Se a pergunta não for sobre aluguel, redirecione educadamente".
-- **Nunca é removida** — mesmo quando mensagens antigas são descartadas por limite de contexto.
+- **Define o papel do modelo**: por exemplo, "Você é um agente de suporte de aluguel de carros da Miles of Smiles".
+- **Controla o tom**: por exemplo, "Seja amigável, educado e conciso".
+- **Estabelece limites**: por exemplo, "Se a pergunta não for sobre aluguel, redirecione educadamente".
+- **Nunca é removida**: mesmo quando mensagens antigas são descartadas por limite de contexto.
 {: .fs-3 }
 
 ### Implementação: anotação `@SystemMessage`
@@ -284,9 +284,9 @@ Tell me a story
 
 ## Síntese
 
-- **Step 2 — Parâmetros do modelo**: `temperature` regula criatividade vs. previsibilidade, `max-completion-tokens` limita o tamanho da resposta e `frequency-penalty` controla a tendência do modelo a repetir palavras.
-- **Step 3 — Streaming com `Multi<String>`**: trocar o tipo de retorno do *AI Service* e do *endpoint* WebSocket de `String` para `Multi<String>` é uma mudança mínima de código com grande impacto na experiência de uso, entregando a resposta token a token.
-- **Step 4 — System Messages**: a anotação `@SystemMessage` define papel, tom e limites do modelo, é invisível ao usuário e nunca é descartada da memória, garantindo coerência ao longo de toda a conversa.
+- **Step 2 (Parâmetros do modelo)**: `temperature` regula criatividade vs. previsibilidade, `max-completion-tokens` limita o tamanho da resposta e `frequency-penalty` controla a tendência do modelo a repetir palavras.
+- **Step 3 (Streaming com `Multi<String>`)**: trocar o tipo de retorno do *AI Service* e do *endpoint* WebSocket de `String` para `Multi<String>` é uma mudança mínima de código com grande impacto na experiência de uso, entregando a resposta token a token.
+- **Step 4 (System Messages)**: a anotação `@SystemMessage` define papel, tom e limites do modelo, é invisível ao usuário e nunca é descartada da memória, garantindo coerência ao longo de toda a conversa.
 {: .fs-3 }
 
 Esses três passos formam a base para construir *chatbots* corporativos com Quarkus + LangChain4j que sejam, ao mesmo tempo, **bem comportados**, **responsivos** e **alinhados ao domínio** da aplicação.

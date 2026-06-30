@@ -103,7 +103,7 @@ Note: Importante frisar: o LLM nunca executa código diretamente. Ele apenas sol
 </div>
 </div>
 
-Note: O LLM define os parâmetros das chamadas. Por isso, validação é obrigatória — nunca confie cegamente nos argumentos gerados pelo modelo.
+Note: O LLM define os parâmetros das chamadas. Por isso, validação é obrigatória; nunca confie cegamente nos argumentos gerados pelo modelo.
 
 ---
 
@@ -154,7 +154,7 @@ Note: O LLM pode encadear múltiplas chamadas de função antes de dar a respost
 | **8** | Aplicação | Entrega a resposta ao usuário |
 
 <div class="destaque">
-A aplicação <strong>nunca perde o controle</strong>. O LLM apenas solicita — a execução é sempre da aplicação.
+A aplicação <strong>nunca perde o controle</strong>. O LLM apenas solicita; a execução é sempre da aplicação.
 </div>
 
 ---
@@ -341,7 +341,7 @@ O framework:
 A <strong>descrição</strong> é crucial: quanto mais clara e específica, melhor o LLM saberá quando e como usar a tool.
 </div>
 
-Note: O nome dos parâmetros também importa — o LLM usa nomes semânticos para inferir o significado. "customerFirstName" é melhor do que "param1".
+Note: O nome dos parâmetros também importa; o LLM usa nomes semânticos para inferir o significado. "customerFirstName" é melhor do que "param1".
 
 ---
 
@@ -392,7 +392,7 @@ public Booking getBookingDetails(
 ```
 
 * Validação dupla: a reserva existe **e** pertence ao cliente
-* Evita que um cliente acesse dados de outro — **segurança**
+* Evita que um cliente acesse dados de outro (**segurança**)
 
 Note: Esta é uma validação de autorização simples. Em produção, use tokens de sessão e nunca confie apenas nos dados fornecidos pelo LLM.
 
@@ -489,7 +489,7 @@ Note: @SessionScoped garante que o histórico da conversa seja mantido por sess�
 </div>
 
 <div class="destaque">
-Placeholders no system message permitem injetar contexto dinâmico — data atual, nome do usuário logado, configurações do tenant, etc.
+Placeholders no system message permitem injetar contexto dinâmico: data atual, nome do usuário logado, configurações do tenant, etc.
 </div>
 
 ---

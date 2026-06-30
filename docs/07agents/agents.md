@@ -14,7 +14,7 @@ nav_order: 1
 Parabéns por concluir a Section 1! Você aprendeu a construir aplicações com chatbots, RAG, function calling, MCP e guardrails. Agora, na **Section 2**, o foco muda: em vez de um chatbot que responde a perguntas, você vai construir **agentes autônomos** que tomam decisões, invocam tools e colaboram em workflows.
 {: .fs-3 }
 
-Este capítulo cobre o [Step 01 da Section 2](https://quarkus.io/quarkus-workshop-langchain4j/section-2/step-01/) — seu primeiro agente autônomo usando o módulo `quarkus-langchain4j-agentic`.
+Este capítulo cobre o [Step 01 da Section 2](https://quarkus.io/quarkus-workshop-langchain4j/section-2/step-01/), onde você constrói o primeiro agente autônomo usando o módulo `quarkus-langchain4j-agentic`.
 {: .fs-3 }
 
 ## AI Services vs. AI Agents
@@ -134,7 +134,7 @@ Se a resposta contém `CLEANING_NOT_REQUIRED`, o carro volta para `AVAILABLE`. C
 
 ## Componente 3: CleaningAgent
 
-Aqui está o coração do agente — uma interface com anotações especiais:
+Aqui está o coração do agente, uma interface com anotações especiais:
 {: .fs-3 }
 
 ```java
@@ -171,7 +171,7 @@ public interface CleaningAgent {
 |---|---|
 | `@SystemMessage` | Define o **papel** e a **lógica de decisão** do agente |
 | `@UserMessage` | Fornece **contexto** por requisição (dados do carro + feedback) |
-| `@Agent` | Marca o método como ponto de entrada do agente — **apenas um por interface** |
+| `@Agent` | Marca o método como ponto de entrada do agente (**apenas um por interface**) |
 | `@ToolBox` | Atribui tools que o agente pode invocar |
 
 > **Dica:** a `@SystemMessage` é crítica. Ela diz ao agente **quem** ele é, **o que** fazer, **quando** agir e **como** responder (`CLEANING_NOT_REQUIRED` ou chamar a tool).
@@ -180,12 +180,12 @@ public interface CleaningAgent {
 > **Atenção:** diferente de um AI Service, um agente tem **apenas um método** anotado com `@Agent`. Ele é projetado para ação autônoma, não para conversação contínua.
 {: .fs-3 }
 
-Não há implementação manual — o LangChain4j gera o código que envia system + user messages ao LLM, invoca a tool se necessário e retorna a resposta.
+Não há implementação manual; o LangChain4j gera o código que envia system + user messages ao LLM, invoca a tool se necessário e retorna a resposta.
 {: .fs-3 }
 
 ## Componente 4: CleaningTool
 
-Tools em agentes funcionam como na Section 1 — métodos anotados com `@Tool`:
+Tools em agentes funcionam como na Section 1: métodos anotados com `@Tool`:
 {: .fs-3 }
 
 ```java
@@ -296,17 +296,17 @@ Abra `http://localhost:8080`. A UI mostra a frota e um formulário de feedback p
 ## O que aprendemos
 
 * **AI Agents** tomam decisões autônomas e executam ações via tools
-* A anotação `@Agent` marca o ponto de entrada — **um método por interface**
+* A anotação `@Agent` marca o ponto de entrada (**um método por interface**)
 * Agents reutilizam `@SystemMessage`, `@UserMessage` e `@ToolBox` da Section 1
 * O agente pode **decidir não agir** (sem chamar a tool) com base no contexto
-* A integração com CDI é transparente — injete o agente como qualquer bean Quarkus
+* A integração com CDI é transparente: injete o agente como qualquer bean Quarkus
 {: .fs-3 }
 
 ## Experimentos sugeridos
 
-1. **Edge cases:** teste `"The trunk smells like fish"`, `"Minor scratch on the bumper"`, `"Spotless condition"` — o agente chama a tool?
+1. **Edge cases:** teste `"The trunk smells like fish"`, `"Minor scratch on the bumper"`, `"Spotless condition"`. O agente chama a tool?
 2. **System message:** altere para um especialista mais exigente que pede detail completo a menos que o carro esteja perfeito
-3. **Novo parâmetro:** adicione `tireCleaning` ao `CleaningTool` — o agente aprende a usá-lo?
+3. **Novo parâmetro:** adicione `tireCleaning` ao `CleaningTool` e veja se o agente aprende a usá-lo.
 {: .fs-3 }
 
 ## Troubleshooting
@@ -314,7 +314,7 @@ Abra `http://localhost:8080`. A UI mostra a frota e um formulário de feedback p
 | Problema | Solução |
 |---|---|
 | `OPENAI_API_KEY not set` | Exporte a variável e reinicie a aplicação |
-| Tool nunca é chamada | Revise a `@SystemMessage` — instruções claras sobre quando usar a tool |
+| Tool nunca é chamada | Revise a `@SystemMessage`: inclua instruções claras sobre quando usar a tool |
 | Tool sempre é chamada | Adicione exemplos explícitos de quando retornar `CLEANING_NOT_REQUIRED` |
 | Tool não registrada | Verifique `@Tool` na tool e referência em `@ToolBox` |
 {: .fs-3 }
@@ -324,21 +324,21 @@ Abra `http://localhost:8080`. A UI mostra a frota e um formulário de feedback p
 **Objetivo:** executar o **Step 01 da Section 2** e validar os dois cenários de devolução de carro.
 {: .fs-3 }
 
-**Referência:** [Quarkus LangChain4j Workshop — Section 2, Step 01](https://quarkus.io/quarkus-workshop-langchain4j/section-2/step-01/).
+**Referência:** [Quarkus LangChain4j Workshop, Section 2, Step 01](https://quarkus.io/quarkus-workshop-langchain4j/section-2/step-01/).
 {: .fs-3 }
 
 ### O que fazer
 
 1. Navegar até `section-2/step-01` e subir com `./mvnw quarkus:dev`.
 2. Abrir `http://localhost:8080` e localizar um carro alugado na grade.
-3. Testar devolução com feedback de limpeza (`Car has dog hair all over the back seat`) — verificar status `AT_CLEANING` e log da tool.
-4. Testar devolução com carro limpo (`Car looks good`) — verificar status `AVAILABLE`.
+3. Testar devolução com feedback de limpeza (`Car has dog hair all over the back seat`) e verificar status `AT_CLEANING` e log da tool.
+4. Testar devolução com carro limpo (`Car looks good`) e verificar status `AVAILABLE`.
 5. Observar nos logs a decisão do agente em cada caso.
 {: .fs-3 }
 
 # Referência
 
-[Quarkus LangChain4j Workshop — Section 2, Step 01](https://quarkus.io/quarkus-workshop-langchain4j/section-2/step-01/)
+[Quarkus LangChain4j Workshop, Section 2, Step 01](https://quarkus.io/quarkus-workshop-langchain4j/section-2/step-01/)
 {: .fs-3 }
 
 <center>

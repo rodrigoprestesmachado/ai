@@ -14,7 +14,7 @@ nav_order: 4
 O **Model Context Protocol (MCP)** é um padrão aberto que padroniza a forma como aplicações de IA se comunicam com fontes de dados e ferramentas externas. Enquanto o Function Calling permite ao LLM invocar funções **locais** da aplicação, o MCP vai além: ele define um protocolo de comunicação que permite ao LLM interagir com **servidores remotos** de forma segura, bidirecional e agnóstica de linguagem.
 {: .fs-3 }
 
-Criado pela Anthropic e adotado amplamente pela comunidade, o MCP funciona como um "conector universal" entre agentes de IA e o ecossistema de ferramentas e dados ao redor. Um servidor MCP pode ser escrito em qualquer linguagem — Python, TypeScript, Java — e ser consumido por qualquer cliente MCP compatível.
+Criado pela Anthropic e adotado amplamente pela comunidade, o MCP funciona como um "conector universal" entre agentes de IA e o ecossistema de ferramentas e dados ao redor. Um servidor MCP pode ser escrito em qualquer linguagem (Python, TypeScript, Java) e ser consumido por qualquer cliente MCP compatível.
 {: .fs-3 }
 
 ## Arquitetura MCP
@@ -29,12 +29,12 @@ A arquitetura do MCP é composta por dois papéis principais: o **MCP Server** e
 A imagem acima ilustra um exemplo concreto de agente MCP: a partir de um prompt do usuário, o **AI Agent** orquestra três ferramentas em sequência:
 {: .fs-3 }
 
-1. **City Extractor Tool** — extrai o nome da cidade mencionada no prompt (executa localmente, usando o próprio LLM como ferramenta de extração).
-2. **Geocoding Tool** — converte o nome da cidade em coordenadas geográficas (latitude/longitude), consultando uma API externa.
-3. **Weather Forecast Service** — usa as coordenadas para buscar a previsão do tempo em uma API meteorológica remota.
+1. **City Extractor Tool**: extrai o nome da cidade mencionada no prompt (executa localmente, usando o próprio LLM como ferramenta de extração).
+2. **Geocoding Tool**: converte o nome da cidade em coordenadas geográficas (latitude/longitude), consultando uma API externa.
+3. **Weather Forecast Service**: usa as coordenadas para buscar a previsão do tempo em uma API meteorológica remota.
 {: .fs-3 }
 
-O resultado de cada tool alimenta a próxima etapa, e o agente combina todas as informações para entregar a resposta final ao usuário. Esse encadeamento de ferramentas é exatamente o que o MCP padroniza: uma forma comum de expor e invocar ferramentas — locais ou remotas — de qualquer aplicação de IA.
+O resultado de cada tool alimenta a próxima etapa, e o agente combina todas as informações para entregar a resposta final ao usuário. Esse encadeamento de ferramentas é exatamente o que o MCP padroniza: uma forma comum de expor e invocar ferramentas, locais ou remotas, de qualquer aplicação de IA.
 {: .fs-3 }
 
 ```
@@ -240,8 +240,8 @@ public interface CustomerSupportAgent {
 Dois pontos importantes:
 {: .fs-3 }
 
-* **`@McpToolBox("weather")`** — referencia o servidor MCP pelo nome configurado em `application.properties`. O Quarkus LangChain4j descobre automaticamente as tools disponíveis no servidor e as inclui nas requisições ao LLM.
-* **`@ToolBox` e `@McpToolBox` podem coexistir** — é possível combinar tools locais (Function Calling) com tools remotas (MCP) no mesmo AI Service.
+* **`@McpToolBox("weather")`**: referencia o servidor MCP pelo nome configurado em `application.properties`. O Quarkus LangChain4j descobre automaticamente as tools disponíveis no servidor e as inclui nas requisições ao LLM.
+* **`@ToolBox` e `@McpToolBox` podem coexistir**: é possível combinar tools locais (Function Calling) com tools remotas (MCP) no mesmo AI Service.
 {: .fs-3 }
 
 ## Function Calling Local vs. MCP
@@ -252,7 +252,7 @@ Ambas as abordagens permitem ao LLM executar ações além de responder pergunta
 | Aspecto | Function Calling (`@ToolBox`) | MCP (`@McpToolBox`) |
 |---|---|---|
 | **Localização** | Execução local, dentro da aplicação | Execução remota, em servidor separado |
-| **Reusabilidade** | Limitada à aplicação | Alta — qualquer cliente MCP pode usar |
+| **Reusabilidade** | Limitada à aplicação | Alta: qualquer cliente MCP pode usar |
 | **Linguagem** | Java | Qualquer linguagem |
 | **Transporte** | In-process | HTTP com SSE |
 | **Complexidade** | Baixa | Moderada |
@@ -263,7 +263,7 @@ As duas técnicas são **complementares** e podem ser combinadas no mesmo AI Ser
 
 # Referência
 
-[Quarkus LangChain4j Workshop — Step 08](https://quarkus.io/quarkus-workshop-langchain4j/section-1/step-08/)
+[Quarkus LangChain4j Workshop, Step 08](https://quarkus.io/quarkus-workshop-langchain4j/section-1/step-08/)
 {: .fs-3 }
 
 <center>

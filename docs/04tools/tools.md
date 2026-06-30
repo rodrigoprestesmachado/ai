@@ -11,10 +11,10 @@ nav_order: 3
 <iframe src="https://ai.rpmhub.dev/04tools/slides/index.html#/" title="Function Calling and Tools" width="90%" height="500" style="border:none;"></iframe>
 </center>
 
-**Function Calling** (ou chamada de função) é um mecanismo oferecido por alguns LLMs — como os modelos GPT e Llama — que permite ao modelo **invocar funções definidas pela aplicação** durante uma conversa. Em vez de apenas gerar texto, o modelo pode decidir, com base no contexto da conversa, chamar uma função específica com os parâmetros que julgar adequados, aguardar o resultado e então formular a resposta final ao usuário.
+**Function Calling** (ou chamada de função) é um mecanismo oferecido por alguns LLMs, como os modelos GPT e Llama, que permite ao modelo **invocar funções definidas pela aplicação** durante uma conversa. Em vez de apenas gerar texto, o modelo pode decidir, com base no contexto da conversa, chamar uma função específica com os parâmetros que julgar adequados, aguardar o resultado e então formular a resposta final ao usuário.
 {: .fs-3 }
 
-Enquanto o RAG amplia o conhecimento do LLM injetando contexto no prompt, o Function Calling vai além: ele permite que o LLM **execute ações reais** — consultar um banco de dados, cancelar uma reserva, chamar uma API externa ou qualquer lógica que a aplicação exponha como ferramenta.
+Enquanto o RAG amplia o conhecimento do LLM injetando contexto no prompt, o Function Calling vai além: ele permite que o LLM **execute ações reais**, como consultar um banco de dados, cancelar uma reserva, chamar uma API externa ou qualquer lógica que a aplicação exponha como ferramenta.
 {: .fs-3 }
 
 ## O ciclo de Function Calling
@@ -26,7 +26,7 @@ O fluxo acontece da seguinte forma:
 {: .fs-3 }
 
 1. **Envio da lista de tools:** quando a aplicação envia a mensagem do usuário ao LLM, ela também inclui a lista de funções disponíveis, com nome, descrição e parâmetros de cada uma.
-2. **Decisão do LLM:** o modelo analisa a conversa e decide se deve, ou não, invocar alguma função. Caso decida, retorna uma *tool call request* — um objeto estruturado indicando qual função chamar e com quais argumentos.
+2. **Decisão do LLM:** o modelo analisa a conversa e decide se deve, ou não, invocar alguma função. Caso decida, retorna uma *tool call request*, um objeto estruturado indicando qual função chamar e com quais argumentos.
 3. **Execução pela aplicação:** a aplicação recebe a solicitação, executa a função localmente (com acesso ao banco de dados, APIs, etc.) e envia o resultado de volta ao LLM.
 4. **Resposta final:** o LLM usa o resultado da função para compor a resposta em linguagem natural para o usuário.
 {: .fs-3 }
@@ -171,9 +171,9 @@ public class BookingRepository implements PanacheRepository<Booking> {
 As três tools expostas são:
 {: .fs-3 }
 
-* **`cancelBooking`** — cancela uma reserva, verificando as regras de negócio (prazo mínimo de 11 dias e duração mínima de 4 dias).
-* **`listBookingsForCustomer`** — lista todas as reservas de um cliente pelo nome.
-* **`getBookingDetails`** — retorna os detalhes de uma reserva específica, validando que ela pertence ao cliente informado.
+* **`cancelBooking`**: cancela uma reserva, verificando as regras de negócio (prazo mínimo de 11 dias e duração mínima de 4 dias).
+* **`listBookingsForCustomer`**: lista todas as reservas de um cliente pelo nome.
+* **`getBookingDetails`**: retorna os detalhes de uma reserva específica, validando que ela pertence ao cliente informado.
 {: .fs-3 }
 
 ### Configurando o AI Service com `@ToolBox`
@@ -206,8 +206,8 @@ public interface CustomerSupportAgent {
 Dois pontos importantes nessa configuração:
 {: .fs-3 }
 
-1. **`@ToolBox(BookingRepository.class)`** — informa ao framework quais classes contêm os métodos anotados com `@Tool`. O Quarkus LangChain4j serializa automaticamente as assinaturas dessas funções e as inclui na requisição enviada ao LLM.
-2. **`{current_date}`** — *placeholder* no system message que é substituído pela data atual em tempo de execução. Isso é essencial para que o LLM possa aplicar corretamente as regras de negócio baseadas em datas (como a política de cancelamento com 11 dias de antecedência).
+1. **`@ToolBox(BookingRepository.class)`**: informa ao framework quais classes contêm os métodos anotados com `@Tool`. O Quarkus LangChain4j serializa automaticamente as assinaturas dessas funções e as inclui na requisição enviada ao LLM.
+2. **`{current_date}`**: *placeholder* no system message que é substituído pela data atual em tempo de execução. Isso é essencial para que o LLM possa aplicar corretamente as regras de negócio baseadas em datas (como a política de cancelamento com 11 dias de antecedência).
 {: .fs-3 }
 
 ## RAG vs. Function Calling
@@ -225,7 +225,7 @@ Elas também podem ser **combinadas**: o LLM pode usar RAG para responder pergun
 
 # Referência
 
-[Quarkus LangChain4j Workshop — Step 07](https://quarkus.io/quarkus-workshop-langchain4j/section-1/step-07/)
+[Quarkus LangChain4j Workshop, Step 07](https://quarkus.io/quarkus-workshop-langchain4j/section-1/step-07/)
 {: .fs-3 }
 
 <center>

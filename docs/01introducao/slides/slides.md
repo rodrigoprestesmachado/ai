@@ -14,12 +14,12 @@ Introdução à integração com modelos de IA em Java
 
 ## Agenda do Step 01
 
-1. 🧠 **Conceitos** — O que é Quarkus, LLM, LangChain4j
-2. 🏗️ **Anatomia do projeto** — Estrutura, dependências, configuração
-3. 💻 **O código** — As duas classes que fazem tudo acontecer
-4. 🔄 **Memória & Statelessness** — Como o chatbot lembra do contexto
-5. 🚀 **Executando** — `./mvnw quarkus:dev` e testando o bot
-6. 🗺️ **Próximos passos** — Para onde o workshop nos leva
+1. 🧠 **Conceitos** O que é Quarkus, LLM, LangChain4j
+2. 🏗️ **Anatomia do projeto** Estrutura, dependências, configuração
+3. 💻 **O código** As duas classes que fazem tudo acontecer
+4. 🔄 **Memória & Statelessness** Como o chatbot lembra do contexto
+5. 🚀 **Executando** `./mvnw quarkus:dev` e testando o bot
+6. 🗺️ **Próximos passos** Para onde o workshop nos leva
 
 <div class="destaque">
 <strong>Objetivo:</strong> entender cada peça da aplicação, não apenas executar o tutorial.
@@ -53,13 +53,13 @@ Introdução à integração com modelos de IA em Java
 
 ## O que é um LLM?
 
-**LLM** = *Large Language Model* — um modelo de IA treinado com bilhões de palavras para prever texto.
+**LLM** = *Large Language Model* um modelo de IA treinado com bilhões de palavras para prever texto.
 
 Exemplos populares:
 
-- 🤖 **GPT-4o** (OpenAI) — o que vamos usar neste workshop
+- 🤖 **GPT-4o** (OpenAI) o que vamos usar neste workshop
 - 🤖 **Claude** (Anthropic)
-- 🦙 **Llama 3** (Meta) — open source, roda local
+- 🦙 **Llama 3** (Meta) open source, roda local
 
 **Características importantes:**
 
@@ -189,8 +189,8 @@ No `pom.xml`:
 
 **Por que duas?**
 
-- 🤖 `quarkus-langchain4j-openai` — fala com a OpenAI (ou qualquer endpoint compatível)
-- 🌐 `quarkus-websockets-next` — expõe o backend ao navegador via WebSocket (comunicação em tempo real, bidirecional)
+- 🤖 `quarkus-langchain4j-openai` fala com a OpenAI (ou qualquer endpoint compatível)
+- 🌐 `quarkus-websockets-next` expõe o backend ao navegador via WebSocket (comunicação em tempo real, bidirecional)
 
 ---
 
@@ -224,9 +224,9 @@ quarkus.langchain4j.openai.log-responses=true
 
 **Pontos importantes:**
 
-- 🔒 `${OPENAI_API_KEY}` — substituição de variável de ambiente (NUNCA hardcode a chave)
-- 📋 `log-requests`/`log-responses` — habilitam o log do JSON enviado/recebido (essencial para entender o que está acontecendo)
-- 🤖 `chat-model.model-name` — qual modelo usar (gpt-4o, gpt-4o-mini, etc.)
+- 🔒 `${OPENAI_API_KEY}` substituição de variável de ambiente (NUNCA hardcode a chave)
+- 📋 `log-requests`/`log-responses` habilitam o log do JSON enviado/recebido (essencial para entender o que está acontecendo)
+- 🤖 `chat-model.model-name` qual modelo usar (gpt-4o, gpt-4o-mini, etc.)
 
 ---
 
@@ -274,7 +274,7 @@ O diretório `src/main/resources/META-INF/resources/` contém uma página HTML p
 
 ## CustomerSupportAgent.java
 
-A peça central da aplicação — uma **interface**, não uma classe:
+A peça central da aplicação uma **interface**, não uma classe:
 
 ```java
 package dev.langchain4j.quarkus.workshop;
@@ -294,7 +294,7 @@ public interface CustomerSupportAgent {
 
 ---
 
-## Decifrando a interface — `@RegisterAiService`
+## Decifrando a interface `@RegisterAiService`
 
 ```java
 @SessionScoped
@@ -306,13 +306,13 @@ public interface CustomerSupportAgent {
 
 **`@RegisterAiService`** (do quarkus-langchain4j)
 
-- 🏷️ Declara que esta interface é um *AI Service* — uma abstração para conversar com um LLM
+- 🏷️ Declara que esta interface é um *AI Service* uma abstração para conversar com um LLM
 - 🏗️ O Quarkus **gera a implementação em build time** (compilação)
 - ⚙️ A implementação gerada: monta o JSON, chama a API, parseia a resposta, gerencia tokens
 
 ---
 
-## Decifrando a interface — `@SessionScoped`
+## Decifrando a interface `@SessionScoped`
 
 **`@SessionScoped`** (CDI / Jakarta EE)
 
@@ -333,11 +333,11 @@ String chat(String userMessage);
 
 - 📥 O **único parâmetro** é tratado como a mensagem do usuário (role `user`)
 - 📤 O **retorno** é a resposta gerada pelo LLM
-- ✏️ O nome do método é **livre** — poderia ser `responder()`, `falar()`, etc.
+- ✏️ O nome do método é **livre** poderia ser `responder()`, `falar()`, etc.
 
 ---
 
-## E o método chat? — o que não precisamos escrever
+## E o método chat? o que não precisamos escrever
 
 **O que NÃO precisamos escrever:**
 
@@ -387,7 +387,7 @@ public class CustomerSupportAgentWebSocket {
 
 ---
 
-## Decifrando o WebSocket — anotação e construtor
+## Decifrando o WebSocket anotação e construtor
 
 **`@WebSocket(path = "/customer-support-agent")`**
 
@@ -400,14 +400,14 @@ Expõe a classe como endpoint WebSocket em `ws://localhost:8080/customer-support
 
 ---
 
-## Decifrando o WebSocket — mensagens
+## Decifrando o WebSocket mensagens
 
-**`@OnOpen`** — chamado quando o cliente conecta
+**`@OnOpen`** chamado quando o cliente conecta
 
 - 📤 Retornar uma `String` envia essa string como **primeira mensagem** ao cliente
 - 💬 Aqui: `"Welcome to Miles of Smiles! How can I help you today?"`
 
-**`@OnTextMessage`** — chamado a cada mensagem de texto recebida
+**`@OnTextMessage`** chamado a cada mensagem de texto recebida
 
 - 📥 Recebe a `String` enviada pelo cliente
 - 📤 Retornar uma `String` envia automaticamente como resposta
@@ -501,7 +501,7 @@ Na raiz do projeto:
 
 ---
 
-## Subindo o servidor — erro comum
+## Subindo o servidor erro comum
 
 **Erro comum:**
 
@@ -578,28 +578,28 @@ No terminal, observe os logs HTTP request/response em tempo real.
 
 ---
 
-## O que vem depois? — Section 1
+## O que vem depois? Section 1
 
-O workshop completo tem **2 seções com 10 steps cada**. *Section 1 — AI Apps:*
+O workshop completo tem **2 seções com 10 steps cada**. *Section 1 AI Apps:*
 
-- 🌡️ Step 02 — Parâmetros do modelo (temperature, top_p, ...)
-- ⚡ Step 03 — Streaming de respostas
-- 💬 Step 04 — System messages (instruções ao bot)
-- 📚 Step 05 — RAG (Retrieval Augmented Generation)
-- 🔬 Step 06 — Desconstruindo o RAG
+- 🌡️ Step 02 Parâmetros do modelo (temperature, top_p, ...)
+- ⚡ Step 03 Streaming de respostas
+- 💬 Step 04 System messages (instruções ao bot)
+- 📚 Step 05 RAG (Retrieval Augmented Generation)
+- 🔬 Step 06 Desconstruindo o RAG
 
 ---
 
-## O que vem depois? — Section 2
+## O que vem depois? Section 2
 
-*Section 1 — AI Apps (cont.):*
+*Section 1 AI Apps (cont.):*
 
-- 🔧 Step 07 — Function calling e tools
-- 🔗 Step 08 — Model Context Protocol (MCP)
-- 🛡️ Step 09 — Guardrails
-- 📊 Step 10 — Observabilidade e tolerância a falhas
+- 🔧 Step 07 Function calling e tools
+- 🔗 Step 08 Model Context Protocol (MCP)
+- 🛡️ Step 09 Guardrails
+- 📊 Step 10 Observabilidade e tolerância a falhas
 
-**Section 2 — Agentic Workflows** — agentes, supervisor, human-in-the-loop, agentes remotos (A2A), multimodalidade.
+**Section 2 Agentic Workflows** agentes, supervisor, human-in-the-loop, agentes remotos (A2A), multimodalidade.
 
 ---
 

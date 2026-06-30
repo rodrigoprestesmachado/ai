@@ -10,7 +10,7 @@ has_children: true
 **AI Services** são interfaces Java anotadas com `@RegisterAiService` cujo comportamento é gerado automaticamente pelo Quarkus LangChain4j. Elas representam o padrão reativo da **Section 1** do workshop: o LLM responde a prompts do usuário, pode receber contexto via RAG, invocar ferramentas locais ou remotas (MCP) e ser protegido por guardrails.
 {: .fs-3 }
 
-Este trilho cobre os *Steps* 02 a 09 do [Quarkus LangChain4j Workshop — Section 1](https://quarkus.io/quarkus-workshop-langchain4j/section-1/step-02/), sempre usando o cenário da locadora **Miles of Smiles**.
+Este trilho cobre os *Steps* 02 a 09 do [Quarkus LangChain4j Workshop, Section 1](https://quarkus.io/quarkus-workshop-langchain4j/section-1/step-02/), sempre usando o cenário da locadora **Miles of Smiles**.
 {: .fs-3 }
 
 ## Capítulos
@@ -25,7 +25,7 @@ Este trilho cobre os *Steps* 02 a 09 do [Quarkus LangChain4j Workshop — Sectio
 
 ## Ordem sugerida
 
-Leia os capítulos na ordem acima. Cada um pressupõe o conhecimento dos anteriores — especialmente Function Calling (Step 07) e MCP (Step 08) antes de Guardrails (Step 09).
+Leia os capítulos na ordem acima. Cada um pressupõe o conhecimento dos anteriores, especialmente Function Calling (Step 07) e MCP (Step 08) antes de Guardrails (Step 09).
 {: .fs-3 }
 
 <center>
