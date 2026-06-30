@@ -90,7 +90,7 @@ Note: A diferença entre as duas colunas nem sempre é óbvia para regras fixas.
 
 Guardrails são funções executadas **antes** e **depois** da chamada ao LLM para garantir segurança e confiabilidade.
 
-<img src="https://kroki.io/plantuml/svg/fVLdTsIwFL7vUxzhmmQsjCgmBpRJliAzgz3AYTvDStfOrkPj2_gsvpjdADMRvVm676ff19OOS4PaVLlgF-aJcoJCIJes3HJZoMYc1phsN1pVMr1TQmkwGmVpKZKmpUopw0qYFb2ZieAbmVsaEvsh3VJpSgzKjaBbpVPS-w27g-GVR-uzspPsbh9db-Cck94raQ4icukya4tQa_X6VxgmRun_--wlp12crO-5w1PZ7x6swaETl9Xnh-aqA1hCzNh3degEi8d4BbN4Ek2jSTBnOxQ8RZgsVv6SFVrlhQEun62BK9n4g1nbP58_QKG5THiBouFr5DCta8EljbpZ5jgDbLvCeHU2duo_hsHS_r1jfY0KCFBUCZeYKCqb7cMf8RGVhbLvqKGi42QOua6beB615b69DihpU-n9LPwTx6Epi6HXu6lPGsyaVX2mEaCdxw5TdUR9i62FeqmoBmtNjdqC4Z6P2Jhkah_4Fw" alt="Guardrails: input e output" style="max-height:380px; width:auto; max-width:100%;">
+<img src="https://kroki.io/plantuml/svg/eJyFkkFuwjAQRfc-xQjWSCEFRLuooCVFkShBIdmxGRIHuSSe1HGo1Nv0LL1Y7UARQind2d9Pf_6MZ1JpVLouclbthSxRYQEJFSVJLvUTqZSrZ8pJQXcwuh_ybSuGyX6nqJbpCe2jOxw4begLSX2CuMvH2SWEStHHX8Uw0aRu5zki11mcrD90R9fYrRySNP_fpqFa8rDGHzpxVX9_KUEdwApixs4jgI6_XMURzONpOAun_mIjD5iLFGG6jLz1RpbKoBqEfOOJFiQbB39-HuuF02LxCqUSMhEl5g1nlRYwiKP2mjNvFfhre_3EwqAEHDCvEyExIV41nkFr7ZBXJZntaZDQEgPHHV8SnvlQqPiuVscpeNC92zqZkzEWQ6_3aJpipi97srEfAE3rB0zpV_WMts3pveZWtIxVgzkLju8hm3CZmuX9Abu76mQ" alt="Guardrails: input e output" style="max-height:340px; width:auto; max-width:100%;">
 
 <div class="destaque">
 Neste step focamos no <strong>input guardrail</strong>: validar a mensagem do usuário antes que ela chegue ao agente com acesso a funções e dados.
