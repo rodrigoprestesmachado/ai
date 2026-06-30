@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Model Context Protocol (MCP)
-nav_order: 6
+parent: AI Services
+nav_order: 4
 ---
 
 # Model Context Protocol (MCP)

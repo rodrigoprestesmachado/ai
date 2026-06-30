@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Configuration and Streaming
-nav_order: 3
+parent: AI Services
+nav_order: 1
 ---
 
 # LLM configuration and Streaming

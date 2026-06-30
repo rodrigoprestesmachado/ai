@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Function Calling and Tools
-nav_order: 5
+parent: AI Services
+nav_order: 3
 ---
 
 # Function Calling e Tools

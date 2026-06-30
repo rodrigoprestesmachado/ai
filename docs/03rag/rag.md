@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Retrieval Augmented Generation
-nav_order: 4
+parent: AI Services
+nav_order: 2
 ---
 
 # RAG: Retrieval Augmented Generation

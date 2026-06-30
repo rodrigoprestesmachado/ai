@@ -385,6 +385,18 @@ As duas técnicas são <strong>complementares</strong> e podem ser combinadas no
 
 ---
 
+## Section 1 concluída — e agora?
+
+Parabéns! Você percorreu todo o trilho **AI Services**: chatbot, parâmetros, streaming, RAG, tools, MCP e guardrails.
+
+O próximo passo é a **Section 2 — Agentic Workflows**, onde agentes autônomos (`@Agent`) tomam decisões, invocam tools e colaboram em workflows multi-agente.
+
+<div class="destaque">
+Continue em <strong>AI Agents → Implementing AI Agents</strong> para construir seu primeiro agente autônomo.
+</div>
+
+---
+
 ## Recursos & links
 
 **Tutorial oficial**
